@@ -1,0 +1,14 @@
+<div class="span12">
+    <div class="row show-grid">
+        <div class="span11 offset2">
+            </br></br></br>
+             <h5 ><?php echo $this->selectedNoticia->getUltimaActualizacion()->format('d-m-y'); ?></h5>
+            <h1><?php echo $this->selectedNoticia->getTitulo(); ?></h1>
+           
+            </br>
+            <p><?php echo $this->selectedNoticia->getContenido(); ?></p>
+            </br></br></br>
+            <a href="javascript:window.history.back();">&laquo; Volver </a>
+        </div>
+    </div>
+</div>

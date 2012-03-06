@@ -1,0 +1,67 @@
+<?php
+$session = new Zend_Session_Namespace();
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+
+<div class="span16">
+    <h2>Administracion Planes de Estudio</h2>
+    <br>        
+    <button class="btn primary icon alternative add" onclick="window.location.href='/administracion/agregarplan'">Agregar Plan de Estudio</button>&nbsp;
+    <button class="btn primary icon alternative add" onclick="window.location.href='/administracion/agregartipoevcal'">Agregar Tipo de Evento Calificacion</button>
+    <button class="btn primary icon alternative add" onclick="window.location.href='/administracion/subirmaterial'">Subir Material</button>
+    
+    <br>
+    <div class="span12">
+        <table table cellpadding="0" cellspacing="0" border="0" class="display" id="alumnos">
+            <thead>
+                <tr>
+                    <th>Plan</th>
+                    <th>A&ntilde;o</th>
+                    <th>Descripcion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->listaplanes as $plan) : ?>
+                    <tr class="even gradeA" onclick="window.location.href='/administracion/infoplan/planid/<?php echo $plan->getId(); ?>'">
+                        <td class="center"><?php echo $plan->getNombre(); ?></td>
+                        <td class="center"><?php echo $plan->getAnio(); ?></td>
+                        <td class="center"><?php echo $plan->getDescripcion(); ?></td>
+                    </tr>     
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+  
+        $(document).ready(function() {
+            $('#alumnos').dataTable({
+                "bPaginate": true,
+                //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+                "bLengthChange": false,
+                "bFilter": true,
+                "bSort": true,
+                "bInfo": true,
+                "bAutoWidth": false,
+                "aaSorting": [[ 0, "asc" ]],
+                "sScrollY": "280px",
+                "bPaginate": false,
+                "oLanguage": {
+                    "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                    "sZeroRecords": "No hay registros",
+                    "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "sInfoFiltered": "(filtered from _MAX_ total records)",
+                    "sSearch":"Buscar por:"
+                },
+                "aoColumns" : [
+                    { sWidth: '20%' },
+                    { sWidth: '20%' },
+                    { sWidth: '60%' }
+           
+                ] 
+            } );
+        } );
+    </script>
+</div>

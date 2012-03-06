@@ -1,0 +1,140 @@
+<?php
+$session = new \Zend_Session_Namespace();
+include("tabBar.php");
+include("dataTables.php");
+?>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        oAlumnosTable = $('#alumnos').dataTable({
+            "bPaginate": true,
+            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false,
+            "aaSorting": [[ 1, "asc" ]],
+            "sScrollY": "200px",
+            "bPaginate": false,
+            "oLanguage": {
+                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                "sZeroRecords": "No hay registros",
+                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                "sSearch":"Buscar por:"
+            },
+            "aoColumns" : [
+                { sWidth: '30%' },
+                { sWidth: '30%' },
+                { sWidth: '30%' },
+                { sWidth: '10%' }
+            ]
+        });        
+        
+        $('#plan-select').change(function() {
+            var planId =  $("#plan-select").val();
+            renderPeriodosSelect(planId);
+            // update students table to only show those who are in the selected plan.
+            updateAlumnosPlanTable(planId, oAlumnosTable);
+        });
+        
+        $('#periodo-select').change(function() {
+            var planId =  $("#plan-select").val();
+            var periodoId =  $("#periodo-select").val();
+            
+            renderCursosSelect(planId, periodoId);
+        });
+        
+        // hace que se seleccione la primera opcion (si hay alguna) y dispara el evento change
+        if ($("#plan-select").val()) {
+            $("#plan-select, option[value='0']").attr('selected','selected');            
+            $("#plan-select").trigger('change');
+        }
+    });
+</script>
+
+<div class="span16">    
+    <h2>Inscribir Alumnos a Curso</h2>
+    <form action="#" method="post">
+        <fieldset>
+            <div class="row show-grid">
+                <div class="span4 offset1 ">
+                    <div class="clearfix">
+                        <h4>Plan:&nbsp;</h4>
+                        <select name="planes" id="plan-select">
+                            <?php foreach ($this->listaplanes as $plan) : ?>
+                                <option value="<?php echo $plan->getId(); ?>"><?php echo $plan->getNombre(); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div><!-- /clearfix -->
+                </div>
+                <div class="span4 offset1 ">
+                    <div class="clearfix">
+                        <h4>Periodo:&nbsp;</h4>
+                        <select name="periodos" id="periodo-select">
+                            <option value="">Seleccione un Plan...</option>                            
+                        </select>
+                    </div><!-- /clearfix -->
+                </div> 
+                <div class="span4 offset1 ">
+                    <div class="clearfix">
+                        <h4>Materia:&nbsp;</h4>
+                        <select name="cursos" id="curso-select">
+                            <option value="">Seleccione un Periodo...</option>
+                        </select>
+                    </div><!-- /clearfix -->
+                </div>                               
+            </div>
+            <div class="span12">
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="alumnos">
+                    <thead>
+                        <tr>
+                            <th>Cedula</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->listaalumnos as $alumno) : ?>
+                            <tr class="even gradeA" >
+                                <td class="center"><?php echo $alumno->getCi(); ?></td>
+                                <td class="center"><?php echo $alumno->getNombre(); ?></td>
+                                <td class="center"><?php echo $alumno->getApellido(); ?></td>
+                                <td class="center"><input type="checkbox" name="alumnos[]" value="<?php echo $alumno->getId(); ?>" /></td>	  
+                            </tr>     
+                        <?php endforeach; ?>      
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="row show-grid">
+                <div class="span4 offset9 ">
+                    <button id="inscribir" type="submit" class="btn primary icon alternative edit">Inscribir Alumnos</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <div class="row show-grid">
+        <div class="span8 offset1">
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar != false) : ?>
+                <div class="alert-message success" id="add-ok" >
+                    <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+                    <p align="center">Los alumnos se han inscripto al curso</p>
+                    </br>                    
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+                <div class="alert-message error" id="add-failed">
+                    <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+                    <p>Error, no se ha podido inscribir los alumnos</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <a href="javascript:window.history.back();">&laquo; Volver </a>    
+</div>

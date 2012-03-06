@@ -1,0 +1,74 @@
+
+<script type="text/javascript" src="/js/treeMenu/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="/js/treeMenu/scriptbreaker-multiple-accordion-1.js"></script>
+
+<div class="row show-grid">
+    <div class="span15">
+        <div class="row">
+            <div class="span5">
+                <div class="well" >
+                    <h2>Materias</h2>
+                    </br>
+
+                    <ul class="topnav">
+                        <h5> Planes</h5>
+                        <?php foreach ($this->listaplanes as $plan) : ?>
+                            <li><a href="#"> <?php echo $plan->getNombre(); ?></a>
+                                <ul style="display: none; ">
+                                    <h5> Periodos</h5>
+                                    <?php foreach ($plan->getPeriodos() as $periodo) : ?>
+                                        <li><a href="#"><?php echo $periodo->getNumero(); ?></a>
+                                            <ul style="display: none; ">
+                                                <h5>Materias</h5>
+                                                <?php foreach ($periodo->getMaterias() as $materia) : ?>
+                                                    <li><a href="/material/mainmaterial/idmateria/<?php echo $materia->getId(); ?>"><?php echo $materia->getNombre(); ?></a>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <script language="JavaScript">
+ 
+                        $(document).ready(function() {
+                            //use the scriptbreaker.com multiple accordion menu
+                            $(".topnav").accordion({
+                                accordion:true,
+                                speed: 500,
+                                closedSign: ' [+]',
+                                openedSign: ' [-]'
+                            });
+                        });
+ 
+                    </script>
+                </div> 
+            </div>
+            <div class="span10">   
+                <div class="row show-grid">
+                    <div class="span9 offset1">  
+                        <?php if ($this->materia != null) { ?>
+                            </br></br>
+                            <h2>Material <?php echo $this->materia->getNombre(); ?></h2>
+                            </br>
+
+                            <ul>
+                                <?php foreach ($this->materia->getMateriales() as $material) : ?>
+                                    <li>                            
+                                        <a href="/material/downloadmaterial/id/<?php echo $material->getId(); ?>"><?php echo $material->getNombre(); ?></a>
+                                    </li>
+                                <?php endforeach; ?>
+
+                            </ul>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

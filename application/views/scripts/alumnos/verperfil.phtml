@@ -1,0 +1,93 @@
+<?php
+include 'tabBarAlumnos.phtml';
+include("dataTables.php");
+?>
+
+<div class="row show-grid">
+
+    <div class="span14 offset1">
+        <h2><?php echo $this->selectedAlumno->getNombre() . " " . $this->selectedAlumno->getApellido(); ?></h2>
+        <div class="row">
+            <div class="span6">
+                </br>
+                <div class="clearfix">
+                    <h5 for="estado">Plan Inscripto</h5>       
+                    <div class="input">
+                        <input class="xlarge" id="plan" name="plan" maxlength="8" type="text" readonly value="<?php echo $this->selectedAlumno->getInscripcion()->getPlanDeEstudio()->getNombre(); ?>"/> 
+                        <br/>
+                    </div>
+                </div><!-- /clearfix -->
+
+                <div class="clearfix">
+                    <h5 for="estado">Fecha Inscripcion</h5>    
+                    <div class="input">
+                        <input class="xlarge" id="estado" name="estado" maxlength="8" type="text" readonly value="<?php echo $this->selectedAlumno->getInscripcion()->getFechaInscripcion()->format('d-m-Y') ?>"/> 
+                        <br/>
+                    </div>
+                </div><!-- /clearfix -->
+            </div>
+            <div class="span7">
+
+                <h3>Materias</h3>
+
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="planes">
+                    <thead>
+                        <tr>
+                            <th>Materia</th>
+                            <th>Periodo</th>   
+                            <th>Estado</th>
+                            <th>Nota Aprobacion</th>
+                            <th>Fecha Aprobada</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->selectedAlumno->getInscripcion()->getInscripcionesCurso() as $inscricpionCurso) { ?>
+                            <tr class="even gradeA" onclick="window.location.href='/alumnos/vercurso/cursoid/<?php echo $inscricpionCurso->getCurso()->getId(); ?>/aluid/<?php echo $this->selectedAlumno->getId(); ?>'">
+                                <td class="center"><?php echo $inscricpionCurso->getCurso()->getMateria()->getNombre(); ?></td>
+                                <td class="center"><?php echo $inscricpionCurso->getCurso()->getMateria()->getPeriodo()->getNumero(); ?></td>
+                                <td class="center"><?php echo $inscricpionCurso->getEstado(); ?></td>
+                                <td class="center"><?php echo $inscricpionCurso->getNotaObtenida(); ?></td>
+                                <td class="center"></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+
+                </table>
+                <script type="text/javascript" charset="utf-8">
+  
+                    $(document).ready(function() {
+                        $('#planes').dataTable({
+                            "bPaginate": true,
+                            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+                            "bLengthChange": false,
+                            "bFilter": true,
+                            "bSort": true,
+                            "bInfo": true,
+                            "bAutoWidth": true,
+                            "aaSorting": [[ 1, "asc" ]],
+                            "sScrollY": "200px",
+                            "bPaginate": false,
+                            "oLanguage": {
+                                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                                "sZeroRecords": "No hay registros",
+                                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                                "sSearch":"Buscar por:"
+                            },
+                            "aoColumns" : [
+                                { sWidth: '40%' },
+                                { sWidth: '10%' },
+                                { sWidth: '20%' },
+                                { sWidth: '10%' },
+                                { sWidth: '20%' }
+           
+                            ] 
+                        } );
+                    } );
+                </script>
+            </div>
+        </div>
+        <a href="javascript:window.history.back();">&laquo; Volver </a>
+    </div>
+</div>

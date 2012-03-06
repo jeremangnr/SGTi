@@ -1,0 +1,117 @@
+<?php
+include("dataTables.php");
+?>
+
+<?php //echo($this->selectedCurso->getNombre()); ?>
+<div class="row show-grid">
+    <div class="span16 offset1">
+        <div class="row">
+            <div class="span11">
+                <h2><?php echo $this->selectedCurso->getAnio(); ?> - <a><?php echo $this->selectedCurso->getMateria()->getNombre(); ?></a></h2> 
+            </div>
+        </div>
+        </br>
+        <div class="row show-grid">
+            <button class="span4 btn primary icon alternative " onclick="window.location.href='/alumnos/infocursoec/cursoid/<?php echo ($this->selectedCurso->getId()); ?>/aluid/<?php echo ($this->selectedAlumno->getId()); ?>'">Clases - Horarios</button>&nbsp;
+            <button class="btn primary icon alternative " onclick="window.location.href='/alumnos/infocursodm/cursoid/<?php echo ($this->selectedCurso->getId()); ?>/aluid/<?php echo ($this->selectedAlumno->getId()); ?>'">Docentes</button>
+        </div>
+        </br>
+        <div class="row">
+            <div class="span7">
+                <h3>Eventos Calificacion</h3>
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="alumnos">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+			    <th>Fecha</th>
+			    <th>Nota</th>
+			    <th>Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+			<?php foreach ($this->listaCalificaciones as $calificacion) : ?>
+			<tr class="even gradeA">
+			    <td class="center"><?php echo $calificacion['nombre'];?></td>
+			    <td class="center"><?php echo $calificacion['ultimaActualizacion'];?></td>
+			    <td class="center"><?php echo $calificacion['notaObtenida'];?></td>
+			    <td class="center"><?php echo $calificacion['observaciones'];?></td>
+			</tr>     
+		    <?php endforeach; ?> 
+                    </tbody>
+
+                </table>
+
+
+                <script type="text/javascript" charset="utf-8">
+                    $(document).ready(function() {
+                        $('#alumnos').dataTable({
+                            "bPaginate": true,
+                            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+                            "bLengthChange": false,
+                            "bFilter": true,
+                            "bSort": true,
+                            "bInfo": true,
+                            "bAutoWidth": false,
+                            "aaSorting": [[ 1, "asc" ]],
+                            "sScrollY": "220px",
+                            "bPaginate": false,
+                            "oLanguage": {
+                                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                                "sZeroRecords": "No hay registros",
+                                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                                "sSearch":"Buscar por:"
+                            }
+                        } );
+                    } );
+                </script></div>
+
+            <div class="span7 offset1">            
+                <h3>Asistencias</h3>
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="eventos">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Asistio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+			<?php foreach ($this->listaAsistencias as $asistencia) : ?>
+    			<tr class="even gradeA">
+    			    <td class="center"><?php echo $asistencia['fecha']; ?></td>
+    			    <td class="center"><?php echo $asistencia['asistio']; ?></td>	    
+    			</tr>     
+			<?php endforeach; ?>
+                    </tbody>
+                </table>
+
+                <script type="text/javascript" charset="utf-8">
+                    $(document).ready(function() {
+                        $('#eventos').dataTable({
+                            "bPaginate": true,
+                            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+                            "bLengthChange": false,
+                            "bFilter": true,
+                            "bSort": true,
+                            "bInfo": true,
+                            "bAutoWidth": false,
+                            "aaSorting": [[ 1, "asc" ]],
+                            "sScrollY": "220px",
+                            "bPaginate": false,
+                            "oLanguage": {
+                                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                                "sZeroRecords": "No hay registros",
+                                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                                "sSearch":"Buscar por:"
+                            }
+                        } );
+                    } );
+                </script> 
+            </div>
+        </div>
+        <a href="javascript:window.history.back();">&laquo; Volver </a>
+    </div>
+</div>

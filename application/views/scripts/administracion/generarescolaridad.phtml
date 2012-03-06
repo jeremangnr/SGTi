@@ -1,0 +1,24 @@
+<?php
+$session = new \Zend_Session_Namespace();
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+
+
+<div class="span16">
+    <h2>Escolaridad</h2>
+    <br>
+   
+</div>
+<br>
+
+<div class="span12">
+    <?php echo $this->esco;?>
+    <form action="#" method="post">
+         <input class="xlarge" id="idalumno" name="idalumno" type="hidden" value="<?php $this->idAlumno;?>"/>
+         <div class="span4 offset6"><button class="btn primary icon alternative add" type="submit">Descargar</button></div>
+    </form>
+</div>

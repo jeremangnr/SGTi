@@ -1,0 +1,153 @@
+<?php
+include("tabBarDocentes.php");
+include("dataTables.php");
+?>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        // hace que se seleccione la primera opcion (si hay alguna)
+        if ($("#curso-select").val()) {
+            $("#curso-select, option[value='0']").attr('selected','selected');
+        }
+        
+        oAlumnosTable = $('#alumnos').dataTable({
+            "bPaginate": true,
+            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false,
+            "aaSorting": [[ 1, "asc" ]],
+            "sScrollY": "250px",
+            "bPaginate": false,
+            "oLanguage": {
+                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                "sZeroRecords": "No hay registros",
+                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                "sSearch":"Buscar por:"
+            },
+            "aoColumns" : [
+                { sWidth: '40%' },
+                { sWidth: '40%' },
+                { sWidth: '40%' },
+                { sWidth: '20%' },
+                { bHidden: true }
+            ] 
+        });
+        
+        $('#curso-select').change(function() {
+            // traigo la id del plan seleccionado
+            var cursoId =  $("#curso-select").val();   
+            // cargo unos params para crear el ajax request
+            var url = "/ajax/get-alumnos-curso-json";
+            var params = "cursoId=" + cursoId;        
+       
+            $.ajax({
+                data: params,
+                type: "POST",
+                dataType: "json",
+                url: url,
+                success: function(jsonData) {
+                    oAlumnosTable.fnClearTable();
+                    $.each(jsonData, function() {
+                        oAlumnosTable.fnAddData([this.nombre, this.apellido, this.ci, '<input type="checkbox" name="asistencias[]" value="' + this.id + '"/>', '<input type="hidden" name="allAlumnos[]" value="' + this.id + '"/>']);
+                    });
+                    oAlumnosTable.fnDraw();
+                }
+            });
+        });
+        
+        $("#curso-select").trigger('change');
+    });
+</script>
+<script src="/js/bootstrap-datepicker.js"></script>
+<div class="span9 offset1">
+    <h3>Pasar Lista</h3>
+    <form action="#" method="post">
+        <fieldset>
+            <div class="row show-grid">
+                <div class="span4">
+                    <div class="clearfix">
+                        <label>Cursos:&nbsp;</label> 
+                        <div class="input">
+                            <select name="cursos" id="curso-select">
+                                <?php foreach ($this->listaCursos as $curso) : ?>
+                                    <option value="<?php echo $curso->getId(); ?>"><?php echo $curso->getMateria()->getNombre() . "-" . $curso->getAnio(); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div><!-- /clearfix -->
+                    <div class=" <?php echo (!is_null($this->errors) && array_key_exists('fecha', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                        <label for="fecha">Fecha<a>*</a></label>    
+                        <div class="input">
+                            <input data-datepicker="datepicker" name="fecha" class="small" type="text" readonly style="cursor:default;" value="<?php echo date('d-m-Y'); ?>"/>
+                            <?php if (!is_null($this->errors) && array_key_exists('fecha', $this->errors)) : ?>
+                                <span class="help-inline">Debe seleccionar una fecha</span>
+                            <?php endif; ?>
+                            <br/>
+                        </div>
+                    </div><!-- /clearfix -->
+                </div>
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="alumnos">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Cedula</th>
+                            <th>Asistio?</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="alumnos-tbody">
+                    </tbody>	    
+                </table>
+                <br/><br/><br/>
+                <button class="btn primary icon alternative approve">Pasar Lista</button>&nbsp;
+        </fieldset>
+    </form>
+    <div class="row show-grid">
+        <div class="span8 offset1">
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar != false) : ?>
+                <div class="alert-message success" id="add-ok" >
+                    <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+                    <p align="center">Se ha pasado la lista</p>
+                    </br>                    
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+                <div class="alert-message error" id="add-failed">
+                    <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+                    <p>Error, no se ha podido pasar la lista</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <script>
+        $.extend($.fn.datepicker.defaults, {
+            parse: function (string) {
+                var matches;
+                if ((matches = string.match(/^(\d{2,2})\/(\d{2,2})\/(\d{4,4})$/))) {
+                    return new Date(matches[3], matches[1] - 1, matches[2]);
+                } else {
+                    return null;
+                }
+            },
+            format: function (date) {
+                var
+                month = (date.getMonth() + 1).toString(),
+                dom = date.getDate().toString();
+                if (month.length === 1) {
+                    month = "0" + month;
+                }
+                if (dom.length === 1) {
+                    dom = "0" + dom;
+                }
+                return dom + "-" + month + "-" + date.getFullYear();
+            }
+        });  
+    </script>
+</div>
+

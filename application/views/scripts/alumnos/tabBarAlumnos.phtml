@@ -1,0 +1,12 @@
+<?php $session = new Zend_Session_Namespace(); ?>
+
+
+<ul class="tabs">
+
+    <li <?php if ($session->alu_tab_location == 1) {echo "class=\"active\"";}?> >
+        <a href="/alumnos/verperfil">Ver Perfil</a>
+    </li>
+    <li <?php if ($session->alu_tab_location == 2) {echo "class=\"active\"";}?> >
+        <a href="/alumnos/escolaridad">Escolaridad</a>
+    </li>  
+</ul>

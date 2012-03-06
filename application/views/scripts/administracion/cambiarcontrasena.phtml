@@ -1,0 +1,81 @@
+<?php include("tabBar.php"); ?>
+
+<div class="span12">
+
+    <?php print_r($this->success); ?>
+<h1>Cambiar Contraseña</h1>
+    <form action="#" method="post">
+        <fieldset>
+
+            
+
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('nombre', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="nombre">Nombre de Usuario</label>
+                <div class="input">
+                    <input class="xlarge" id="xlInput" name="nombre" maxlength="25" type="text" readonly="true" value="<?php echo $this->form->getValue('nombre'); ?>"/>
+                    <?php if (!is_null($this->errors) && array_key_exists('nombre', $this->errors)) : ?>
+                        <span class="help-inline">*</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+
+
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('oldpassword', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="oldpassword">Vieja Contraseña</label>     
+                <div class="input">
+                    <input class="xlarge" id="oldpass" name="oldpass" maxlength="25" type="password" value="<?php echo $this->form->getValue('oldpass'); ?>"/> 
+                    <?php if (!is_null($this->errors) && array_key_exists('oldpass', $this->errors)) : ?>
+                        <span class="help-inline">*</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+            
+                <div class=" <?php echo (!is_null($this->errors) && array_key_exists('newpass', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="newpassword">Nueva Contraseña</label>     
+                <div class="input">
+                    <input class="newpassword" id="newpass" name="newpass" maxlength="25" type="password" value="<?php echo $this->form->getValue('newpass'); ?>"/> 
+                    <?php if (!is_null($this->errors) && array_key_exists('newpass', $this->errors)) : ?>
+                        <span class="help-inline">*</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+
+
+           
+
+            <?php if ($this->errors != null) : ?>      
+                <div class="clearfix error">
+                    <span class="help-inline">Se han encontrado errores en el formulario, por favor complete todos los campos correctamente</span>
+                </div><!-- /clearfix -->
+            <?php endif; ?>
+            <div class="row show-grid">
+                <div class="span4 offset6"><button class="btn primary icon alternative edit" type="submit">Modificar</button></div>
+            </div>
+        </fieldset>
+    </form>
+
+    <div class="row show-grid">
+        <div class="span8 offset1">
+
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == true) : ?>
+                <div class="alert-message success" id="add-ok" >
+                    <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+                    <p align="center">Contraseña modificada.
+                    </p>
+                    </br>   
+                    </div>
+            <?php endif; ?>
+
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+                <div class="alert-message error" id="add-failed">
+                    <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+                    <p>Error al modificar la contraseña, verifique que los datos sean correctos.</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <a href="javascript:window.history.back();">&laquo; Volver </a>
+</div>

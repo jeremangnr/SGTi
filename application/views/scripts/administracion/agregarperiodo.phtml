@@ -1,0 +1,74 @@
+<?php include("tabBar.php"); ?>
+
+<div class="span12">
+<h2>Agregar Periodo a <a href="/administracion/infoplan/id/<?php echo $this->selectedPlan->getId(); ?>"><?php echo $this->selectedPlan->getNombre(); ?></a></h2>
+    
+    <form action="#" method="post">
+        <fieldset>
+            
+            
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('numero', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="numero">Numero</label>    
+                <div class="input">
+                    <input class="xlarge" id="xlInput" name="numero" maxlength="25" type="text"  value="<?php echo $this->form->getValue('numero'); ?>" /> 
+                    <?php if (!is_null($this->errors) && array_key_exists('numero', $this->errors)) : ?>
+                        <br/>
+                        <br/>
+                        <span class="help-inline">Debe ingresar el número del periodo (solo números)</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+	    
+	    <div class=" <?php echo (!is_null($this->errors) && array_key_exists('tipo', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="tipo">Tipo</label>    
+                <div class="input">
+                    <select name="tipo" id="tipo" >
+                        <?php $sel = (strcmp($this->form->getValue('tipo'), "anual")==0) ? "<option value='anual' selected>Anual</option>": "<option value='anual'>Anual</option>";?>
+                        <option value="semestral">Semestral</option>
+                        <?php echo $sel?>
+                    </select>
+                    <?php if (!is_null($this->errors) && array_key_exists('tipo', $this->errors)) : ?>
+                        <span class="help-inline">XD </span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+        </fieldset>
+        <?php if ($this->errors != null) { ?>      
+            <div class="clearfix error">
+                <span class="help-inline">Se han encontrado errores en el formulario, por favor complete todos los campos correctamente</span>
+            </div><!-- /clearfix -->
+        <?php } ?>
+        <div class="row show-grid">
+            <div class="span4 offset6"><button class="btn primary icon alternative add" type="submit">Agregar</button></div>
+        </div>
+
+    </form>
+
+    <div class="row show-grid">
+        <div class="span8 offset1">
+
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar != false) : ?>
+                <div class="alert-message success" id="add-ok" >
+                    <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+                    <p align="center">El periodo 
+                    <u><b><?php echo $this->periodoIngresado['numero']; ?></b></u> 
+                    ha sido agregado correctamente.
+                    </p>
+                    </br>
+                    <center><a class="success" onclick="window.location.href='/administracion/agregarmateria/perid/<?php echo $this->pudoAgregar;  ?>'">Click aqui para agregar Materia a Periodo <?php echo $this->periodoIngresado['numero']; ?></a></center>
+                    <!--</br><center><button class="btn" onclick="window.location.href='/administracion/agregarperiodo'">Continuar con Agregar Periodo</button></center>-->
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+                <div class="alert-message error" id="add-failed">
+                    <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+                    <p>El periodo no ha sido agregado.</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <a href="javascript:window.history.back();">&laquo; Volver </a>
+</div>

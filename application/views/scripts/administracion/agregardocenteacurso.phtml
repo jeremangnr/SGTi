@@ -1,0 +1,128 @@
+<?php
+$session = new \Zend_Session_Namespace();
+include("tabBar.php");
+include("dataTables.php");
+?>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        // por si no hay planes creados todavia
+        // COMO ME COSTO ESTO DIOS Y LA VIRGEN MARIA
+        if (!$("#plan-select").val()) {
+            return;
+        }
+        
+        $("#plan-select, option[value='0']").attr('selected','selected');
+		
+	oMateriasTable = $('#materias').dataTable({
+	    //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+	    "bLengthChange": false,
+	    "bFilter": true,
+	    "bSort": true,
+	    "bAutoWidth": false,
+	    "aaSorting": [[ 1, "asc" ]],
+	    "sScrollY": "200px",
+	    "bPaginate": false,
+	    "oLanguage": {
+		"sLengthMenu": "Mostrar _MENU_ filas por pagina",
+		"sZeroRecords": "No hay registros",
+		"sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+		"sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+		"sInfoFiltered": "(filtered from _MAX_ total records)",
+		"sSearch":"Buscar por:"
+	    },
+	    "aoColumns" : [
+		{ sWidth: '30%' },
+		{ sWidth: '10%' }           
+	    ] 
+	});
+	
+	    
+	$("#plan-select").change(function() {
+	    // traigo la id del plan seleccionado
+	    var planId =  $("#plan-select").val();    
+	    // cargo unos params para crear el ajax request
+	    var url = "/ajax/get-materias-plan-json";
+	    var params = "planId=" + planId;
+       
+	    $.ajax({
+		data: params,
+		type: "POST",
+		dataType: "json",
+		url: url,
+		success: function(jsonData) {
+		    oMateriasTable.fnClearTable();
+		    $.each(jsonData, function() {
+			oMateriasTable.fnAddData([this.nombre, '<input type="checkbox" name="selectedMaterias[]" value=" ' + this.id + ' "/>']);
+		    });
+		    oMateriasTable.fnDraw();
+		}
+	    });
+	});
+	
+	$("#plan-select").trigger('change');
+    });
+</script>
+
+
+<div class="span16">
+    <h2>Docente A Curso</h2>
+    <form action="#" method="post">
+        <fieldset>
+            <div class="row show-grid">
+                <div class="span4 offset1 ">
+                    <div class="clearfix">
+                        <h4>Plan:&nbsp;</h4>
+                        <select name="plan-select" id="plan-select">
+			    <?php foreach ($this->listaplanes as $plan) : ?>
+    			    <option value="<?php echo $plan->getId(); ?>"><?php echo $plan->getNombre(); ?></option>
+			    <?php endforeach; ?>
+                        </select>                           
+                    </div><!-- /clearfix -->
+                </div>
+            </div>
+
+            <div class="span12">
+                <h3>Materias</h3>
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="materias">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="materias-tbody">
+			<tr class="even gradeA" >
+			    <td class="center">Seleccione un plan primero</td>
+			    <td class="center"></td>
+			</tr>
+                    </tbody>
+                </table>                
+            </div>
+
+            <div class="row show-grid">
+                <div class="span4 offset9 ">
+                    <button id="inscribir" type="submit" class="btn primary icon alternative edit">Asociar a Cursos</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <div class="row show-grid">
+        <div class="span8 offset1">
+	    <?php if (isset($this->pudoAgregar) && $this->pudoAgregar != false) : ?>
+    	    <div class="alert-message success" id="add-ok" >
+    		<a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+    		<p align="center">Se agregado el docente al curso</p>
+    		</br>                    
+    	    </div>
+	    <?php endif; ?>
+
+	    <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+    	    <div class="alert-message error" id="add-failed">
+    		<a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+    		<p>Error, no se ha podido agregar el docente al curso</p>
+    	    </div>
+	    <?php endif; ?>
+        </div>
+    </div>
+    <a href="javascript:window.history.back();">&laquo; Volver </a>
+</div>

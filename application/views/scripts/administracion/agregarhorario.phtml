@@ -1,0 +1,93 @@
+<?php
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+
+<div class="row show-grid">
+    <div class="span16 offset1">
+        <div class="row">
+            <div class="span7">
+                <h2>Agregar Horario</h2>
+                <br>
+                <form action="#" method="post">
+                    <fieldset>
+                        <div class=" clearfix">
+                            <label>Hora Inicio:</label> 
+                            <div class="input">
+                                <input class="span3"  id="horaInicio" name="horaInicio" maxlength="25" type="text"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br>
+                        <div class=" clearfix">
+                            <label for="anio">Hora Fin:</label> 
+                            <div class="input">
+                                <input class="span2"  id="horaFin" name="horaFin" maxlength="25" type="text"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br>
+                        <div class=" clearfix">
+                            <label for="dia">Dia:</label>
+                            <div class="input">
+                                <select name="dia" id="normalSelect">
+                                <option value="Lunes">Lunes</option>
+                                <option value="Martes">Martes</option>
+                                <option value="Miercoles">Miercoles</option>
+                                <option value="Jueves">Jueves</option>
+                                <option value="Viernes">Viernes</option>
+                                <option value="Sabado">Sabado</option>
+                                <option value="Domingo">Domingo</option>
+                                </select>
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br><label for="salon">Salon:&nbsp;</label>
+                        <div class="clearfix">
+
+                            <select name="salones" id="normalSelect">
+                                <?php foreach ($this->listaSalones as $salon) : ?>
+                                    <option value="<?php echo $salon->getId(); ?>"><?php echo $salon->getNombre(); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div><!-- /clearfix -->
+
+                        </br></br>
+                        <div class="row show-grid">
+                            <div class="span2 offset5">
+                                <button type="submit" class="btn primary icon alternative add">Agregar</button>
+                            </div>
+                        </div>
+                        <div class="row show-grid">     
+                            <div class="span7 offset1">     
+                                <?php if ($this->errors != null) { ?> 
+                                    </br>
+                                    <div class="clearfix error">
+                                        <span class="help-inline">Se han encontrado errores en el formulario, por favor complete todos los campos correctamente</span>
+                                    </div><!-- /clearfix -->
+                                <?php } ?>
+                                <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == true) : ?>
+                                    </br>
+                                    <div class="alert-message success" id="add-ok">
+                                        <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+                                        <p>El salon ha sido agregado correctamente.</p>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+                                    </br>
+                                    <div class="alert-message error" id="add-failed">
+                                        <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+                                        <p>El salon no ha sido agregado.</p>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+
+            </div>
+        </div>
+        <a href="javascript:window.history.back();">&laquo; Volver </a>
+    </div> 
+
+</div>

@@ -1,0 +1,45 @@
+
+<div class="hero-unit" style="background:#009cff; height: 100px">
+    <div class="span16">
+        <div class="row">
+            <div class="span10">
+                <h1>BIENVENIDO A SGTi</h1>
+                <p>La pagina de Tecnologo en Informatica</p>
+
+            </div> 
+            <div class="span3 offset1">
+                </br>
+                <p><a href="/index/info" class="btn primary large">Saber Mas &raquo;</a></p>
+            </div>
+        </div> 
+    </div>  
+</div>
+
+<!-- Main hero unit for a primary marketing message or call to action -->
+<div class="row">
+    <?php if (count($this->paginator)) : ?>
+        <?php foreach ($this->paginator as $noticia): ?>
+
+            <div class="span3 well" style="width: 260px; height: 200px">
+                <h2> <abbr title='<?php echo $noticia->getTitulo(); ?>'><?php echo $noticia->preTitulo(); ?></abbr></h2>
+                </br>
+                <div class="span5" style="width: 260px; height:70px">
+                    <p><?php echo $noticia->preNoticia(); ?></p>
+                </div>
+                <hr></hr>
+                <a class="btn primary icon alternative pull-right"  id="vernoticia" name="vernoticia"  onclick="window.location.href='/index/vernoticia/noticiaid/<?php echo $noticia->getId();?>'">Detalles &raquo;</a>
+                </br>
+                <span class="label notice"><?php echo $noticia->getUltimaActualizacion()->format('d-m-y'); ?></span>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>      
+<?php if (count($this->paginator)) { ?>
+    <div class="row show-grid">
+        <div class="span6 offset11">
+
+            <?php echo $this->paginator; ?>
+        </div>
+    </div>
+<?php } ?>
+

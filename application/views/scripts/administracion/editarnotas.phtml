@@ -1,0 +1,43 @@
+<?php
+include("tabBar.php");
+?>
+
+
+<div class="row show-grid">
+    <div class="span16 offset0">
+        <div class="row">
+            <div class="span7">
+                <h2>Notas de  <?php echo ($this->selectedInsCurso->getCurso()->getMateria()->getNombre() . " " . $this->selectedInsCurso->getCurso()->getAnio()); ?></h2>
+                <br>        
+                <br>
+                <form action="#" method="post">
+                    <fieldset>                        
+                        <div class=" clearfix">
+                            <label for="estado">Estado: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            <select name="estado" id="tipoEvento">
+				<option value="<?php echo \SGTi\Entity\InscripcionCurso::CURSANDO; ?>">Cursando</option>
+				<option value="<?php echo \SGTi\Entity\InscripcionCurso::APROBADO; ?>">Aprobado</option>
+				<option value="<?php echo \SGTi\Entity\InscripcionCurso::EXAMEN; ?>">Examen</option>
+				<option value="<?php echo \SGTi\Entity\InscripcionCurso::RECURSA; ?>">Recursa</option>
+			    </select>
+                        </div><!-- /clearfix -->
+                        </br>
+                        <div class=" clearfix">
+                            <label for="notaAprobacion">Nota Aprobacion: &nbsp;</label>
+                            <div class="input">
+                                <input class="span4" id="descripcion" name="notaAprobacion" maxlength="25" value="<?php if($this->selectedInsCurso->getNotaObtenida()){echo $this->selectedInsCurso->getNotaObtenida();} else{ echo "No se ha obtenido nota aún";}?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br></br>
+			<div class="row show-grid">
+			    <div class="span3 offset4">
+				<button id="actualizar"  type="submit" class="btn primary icon alternative reload"  >Actualizar nota</button>
+			    </div>		    		    
+			</div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+            <a href="javascript:window.history.back();">&laquo; Volver </a>
+    </div> 
+</div>

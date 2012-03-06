@@ -1,0 +1,124 @@
+<?php include("tabBar.php"); ?>
+
+<div class="span12">
+    <h2>Agregar Plan</h2>
+    <form action="#" method="post">
+        <fieldset>
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('nombre', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="nombre">Nombre<a>*</a></label>
+                <div class="input">
+                    <input class="xlarge" id="xlInput" name="nombre" maxlength="25" type="text" value="<?php echo $this->form->getValue('nombre'); ?>"/>
+                    <?php if (!is_null($this->errors) && array_key_exists('nombre', $this->errors)) : ?>
+                        <br>
+                        <br>
+                        <span class="help-inline">Debe ingresarle un nombre al plan</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+
+
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('anio', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="anio">A&ntilde;o<a>*</a></label>     
+                <div class="input">
+                    <input class="xlarge" id="xlInput" name="anio" maxlength="25" type="text" value="<?php echo $this->form->getValue('anio'); ?>"/> 
+                    <?php if (!is_null($this->errors) && array_key_exists('anio', $this->errors)) : ?>
+                        <br>
+                        <br>
+                        <span class="help-inline">Debe ingresar un año valido (solo numeros)</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+
+
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('descripcion', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="nombre">Descripcion<a>*</a></label>       
+                <div class="input">
+                    <input  class="xlarge" id="xlInput" name="descripcion" maxlength="25" type="text" value="<?php echo $this->form->getValue('descripcion'); ?>"/> 
+                    <?php if (!is_null($this->errors) && array_key_exists('descripcion', $this->errors)) : ?>
+                        <br>
+                        <br>
+                        <span class="help-inline">Debe ingresar una descripción valida</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('notaExoneracion', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="notaExoneracion">Nota Exoneracion<a>*</a></label>    
+                <div class="input">
+                    <input class="span2" id="xlInput" name="notaExoneracion" maxlength="25" type="text" value="<?php echo $this->form->getValue('notaExoneracion'); ?>"  /> 
+                    <?php if (!is_null($this->errors) && array_key_exists('notaExoneracion', $this->errors)) : ?>
+                        <br>
+                        <br>
+                        <span class="help-inline">Debe ingresar una nota de exoneración válido (solo numeros)</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('notaAprobacion', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="notaAprobacion">Nota Aprobacion<a>*</a></label>    
+                <div class="input">
+                    <input class="span2" id="xlInput" name="notaAprobacion" maxlength="25" type="text" value="<?php echo $this->form->getValue('notaAprobacion'); ?>" /> 
+                    <?php if (!is_null($this->errors) && array_key_exists('notaAprobacion', $this->errors)) : ?>
+                        <br>
+                        <br>
+                        <span class="help-inline">Debe ingresar una nota de aprobacion válida (solo numeros)</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('notaMaxima', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="notaMaxima">Nota Maxima<a>*</a></label>    
+                <div class="input">
+                    <input class="span2" id="xlInput" name="notaMaxima" maxlength="25" type="text" value="<?php echo $this->form->getValue('notaMaxima'); ?>" /> 
+                    <?php if (!is_null($this->errors) && array_key_exists('notaMaxima', $this->errors)) : ?>
+                        <br>
+                        <br>
+                        <span class="help-inline">Debe ingresar una nota máxima válida (solo numeros)</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+
+            <?php if ($this->errors != null) : ?>      
+                <div class="clearfix error">
+                    <br>
+                    <br>
+                    <span class="help-inline">Se han encontrado errores en el formulario, por favor complete todos los campos correctamente</span>
+                </div><!-- /clearfix -->
+            <?php endif; ?>
+            <div class="row show-grid">
+                <div class="span4 offset6"><button class="btn primary icon alternative add" type="submit">Agregar</button></div>
+            </div>
+        </fieldset>
+    </form>
+
+    <div class="row show-grid">
+        <div class="span8 offset1">
+
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar != false) : ?>
+                <div class="alert-message success" id="add-ok" >
+                    <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+                    <p align="center">El plan 
+                    <u><b><?php echo $this->planIngresado['nombre']; ?></b></u> 
+                    ha sido agregado correctamente.
+                    </p>
+                    </br>
+                    <center><a class="success" href="#" onclick="window.location.href='/administracion/agregarperiodo/planid/<?php echo $this->pudoAgregar; ?>'">Click aqui para agregar Periodo a Plan <?php echo $this->planIngresado['nombre']; ?></a></center>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+                <div class="alert-message error" id="add-failed">
+                    <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+                    <p>El plan no ha sido agregado.</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <a href="javascript:window.history.back();">&laquo; Volver </a>
+</div>

@@ -1,0 +1,128 @@
+<?php
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        oAlumnosTable = $('#alumnos').dataTable({
+            "bPaginate": true,
+            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false,
+            "aaSorting": [[ 1, "asc" ]],
+            "sScrollY": "220px",
+            "bPaginate": false,
+            "oLanguage": {
+                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                "sZeroRecords": "No hay registros",
+                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                "sSearch":"Buscar por:"
+            }
+        });
+        
+        $('#eventos').dataTable({
+            "bPaginate": true,
+            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false,
+            "aaSorting": [[ 1, "asc" ]],
+            "sScrollY": "220px",
+            "bPaginate": false,
+            "oLanguage": {
+                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                "sZeroRecords": "No hay registros",
+                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                "sSearch":"Buscar por:"
+            }
+        });
+        
+        //loads data
+        var url = "/ajax/get-alumnos-curso-json";
+        var params = "cursoId=" + <?php echo $this->selectedCurso->getId(); ?> + "&examen=1";
+       
+        $.ajax({
+            data: params,
+            type: "POST",
+            dataType: "json",
+            url: url,
+            success: function(jsonData) {
+                oAlumnosTable.fnClearTable();
+                $.each(jsonData, function() {
+                    oAlumnosTable.fnAddData([this.ci, this.nombre, this.apellido]);
+                });
+                oAlumnosTable.fnDraw();
+            }
+        });
+    });
+</script>
+
+<div class="row show-grid">
+    <div class="span16 offset1">
+        <div class="row">
+            <div class="span11">
+                <h2>Info Curso: <?php echo $this->selectedCurso->getAnio(); ?> - <a href="/administracion/infomateria/idmateria/<?php echo $this->selectedCurso->getMateria()->getId(); ?>"><?php echo $this->selectedCurso->getMateria()->getNombre(); ?></a>&nbsp;&nbsp;&nbsp;&nbsp; Alumnos y Calificaciones</h2> 
+            </div>
+        </div>
+        </br>
+        <div class="row show-grid">
+            <button class="span4 btn primary icon alternative " onclick="window.location.href='/administracion/infocursoec/cursoid/<?php echo ($this->selectedCurso->getId()); ?>'">Clases - Horarios</button>&nbsp;
+            <button class="span4 btn primary icon alternative " onclick="window.location.href='/administracion/infocursod/cursoid/<?php echo ($this->selectedCurso->getId()); ?>'">Docentes</button>
+        </div>
+        </br>
+        <div class="row">
+            <div class="span7">
+                <h3>Alumnos</h3>
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="alumnos">
+                    <thead>
+                        <tr>
+                            <th>Cedula</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="span7 offset1">            
+                <h3>Eventos de Calificaciones</h3>
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="eventos">
+                    <thead>
+                        <tr>
+                            <th>Tipo Evento</th>
+                            <th>Fecha</th>
+                            <th>Nota Maxima</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->listaEventos as $evento) : ?>
+                            <tr class="even gradeA" onclick="window.location.href='/administracion/infoeventocalificacion/eventocalid/<?php echo $evento->getId(); ?>/cursoid/<?php echo $this->selectedCurso->getId(); ?>'">
+                                <td class="center"><?php echo $evento->getTipo()->getNombre(); ?></td>
+                                <td class="center"><?php echo $evento->getUltimaActualizacion()->format('d-m-Y'); ?></td>
+                                <td class="center"><?php echo $evento->getNotaMax(); ?></td>	    
+                            </tr>     
+                        <?php endforeach; ?>      
+                    </tbody>
+                </table>
+                <div class="row show-grid">
+                    <div class="span4 offset4">    
+                        <button class="btn primary icon alternative add" onclick="window.location.href='/administracion/agregareventocalificacion/idcurso/<?php echo ($this->selectedCurso->getId()); ?>'">Agregar Evento Calificacion</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="/administracion/infomateria/idmateria/<?php echo $this->selectedCurso->getMateria()->getId(); ?>">&laquo; Volver </a>
+    </div>
+</div>

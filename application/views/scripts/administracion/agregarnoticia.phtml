@@ -1,0 +1,88 @@
+<?php include("tabBar.php"); ?>
+
+<div class="span12">
+<script type="text/javascript" src="/js/jquery/jquery-1.7.1.js"></script>
+<script type="text/javascript"> 
+$(document).ready(function(){
+	$("#enviar").click(function() {
+		if($("#enviar").is (":checked")) {
+			$('#usuarios').removeAttr("disabled");
+                        
+		} else {
+			$('#usuarios').attr("disabled",'disable');
+		}
+	});
+});
+</script>
+    <?php print_r($this->success); ?>
+
+    <form action="#" method="post">
+        <fieldset>
+            <legend>Agregar Noticia</legend>
+
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('titulo', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="titulo">Titulo</label>    
+                <div class="input">
+                    <input class="xlarge" id="xlInput" name="titulo" maxlength="35" type="text" value="<?php echo $this->form->getValue('titulo'); ?>" /> 
+                    <?php if (!is_null($this->errors) && array_key_exists('titulo', $this->errors)) : ?>
+                        <br>
+                        <br>
+                        <span class="help-inline">Debe ingresar un titulo</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+            
+              <div class="clearfix">                 
+                <label for="Para">Enviar para</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                
+                <select name="usuarios" id="usuarios" class="xlarge" disabled>
+                     <option value="1">Alumnos</option>
+                     <option value="2">Docentes</option>
+                     <option value="3">Todos</option>
+                 </select>
+                &nbsp;
+                <input type="checkbox" id="enviar" name="enviar" value="1"/>
+                <br>
+                 
+             </div><!-- /clearfix -->
+            
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('contenido', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="contenido">Contenido</label>    
+                <div class="input">
+                    <textarea class="span7" id="xlInput" name="contenido" rows="10" maxlength="1000"><?php echo $this->form->getValue('contenido');?></textarea> 
+                    <?php if (!is_null($this->errors) && array_key_exists('contenido', $this->errors)) : ?>
+                        <br>
+                        <br>
+                        <span class="help-inline">Debe ingresar contenido a la noticia</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+        </fieldset>
+        
+        <?php if ($this->errors != null) { ?>      
+            <div class="clearfix error">
+                <span class="help-inline">Se han encontrado errores en el formulario, por favor complete todos los campos correctamente</span>
+            </div><!-- /clearfix -->
+        <?php } ?>
+        <div class="row show-grid">
+            <div class="span4 offset7"><button class="btn primary icon alternative add" type="submit">Agregar</button></div>
+        </div>
+    </form> 
+
+    <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == true) : ?>
+        <div class="alert-message success" id="add-ok">
+            <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+            <p>La noticia ha sido agregada correctamente.</p>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+        <div class="alert-message error" id="add-failed">
+            <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+            <p>La noticia no ha sido agregada.</p>
+        </div>
+    <?php endif; ?>
+    <a href="javascript:window.history.back();">&laquo; Volver </a>
+</div>

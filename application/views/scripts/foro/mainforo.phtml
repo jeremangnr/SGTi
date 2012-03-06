@@ -1,0 +1,125 @@
+<style type="text/css" title="currentStyle">
+    @import "/js/dataTable/css/demo_page.css";
+    @import "/js/dataTable/css/demo_table.css";
+
+</style>
+<script type="text/javascript" language="javascript" src="/js/dataTable/js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="/js/dataTable/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript" src="/js/treeMenu/scriptbreaker-multiple-accordion-1.js"></script>
+
+<div class="row show-grid">
+    <div class="span15">
+        <div class="row">
+            <div class="span5">
+                <div class="well">
+                    <h2>Foro</h2>
+                    </br>
+                    <ul class="topnav">
+                        <h5> Planes</h5>
+                        <?php foreach ($this->listaplanes as $plan) : ?>
+                            <li><a href="#"> <?php echo $plan->getNombre(); ?></a>
+                                <ul style="display: none; ">
+                                    <h5> Periodos</h5>
+                                    <?php foreach ($plan->getPeriodos() as $periodo) : ?>
+                                        <li><a href="#"><?php echo $periodo->getNumero(); ?></a>
+                                            <ul style="display: none; ">
+                                                <h5>Materias</h5>
+                                                <?php foreach ($periodo->getMaterias() as $materia) : ?>
+                                                    <li><a href="<?php echo $materia->getId(); ?>"><?php echo $materia->getNombre(); ?></a>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <script language="JavaScript">
+ 
+                        $(document).ready(function() {
+                            //use the scriptbreaker.com multiple accordion menu
+                            $(".topnav").accordion({
+                                accordion:true,
+                                speed: 500,
+                                closedSign: ' [+]',
+                                openedSign: ' [-]'
+                            });
+                        });
+ 
+                    </script>
+                </div> 
+            </div>
+            <div class="span10">   
+                <h2>Nombre Categoria</h2>
+                
+                </br>
+                <div class="row show-grid">
+                    <div class="span9">  
+
+                        <div class="span12">
+                            <table table cellpadding="0" cellspacing="0" border="0" class="display" id="temas">
+                                <thead>
+                                    <tr>
+                                        <th>Titulo</th>
+                                        <th>Usuario</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="even gradeA">
+                                        <td>sdfasfasdfasdfasdf</td>
+                                        <td class="center">sadfasfs</td>
+                                        <td class="center" ><span class="label notice">fecha</span></td>
+                                    </tr> 
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row show-grid">
+                            <div class="span4 offset9">
+                                <button class="btn primary icon alternative add" onclick="window.location.href='/administracion/agregaradministrativo'">Agregar Tema</button>&nbsp;
+                            </div>
+                        </div>
+                        <script type="text/javascript" charset="utf-8">
+  
+                            $(document).ready(function() {
+                                $('#temas').dataTable({
+                                    "bPaginate": true,
+                                    //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+                                    "bLengthChange": false,
+                                    "bFilter": true,
+                                    "bSort": true,
+                                    "bInfo": true,
+                                    "bAutoWidth": false,
+                                    "aaSorting": [[ 2, "asc" ]],
+                                    "sScrollY": "350px",
+                                    "bPaginate": false,
+                                    "oLanguage": {
+                                        "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                                        "sZeroRecords": "No hay registros",
+                                        "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                        "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                        "sInfoFiltered": "(filtered from _MAX_ total records)",
+                                        "sSearch":"Buscar por:"
+                                    },
+                                    "aoColumns" : [
+                                        { sWidth: '70%' },
+                                        { sWidth: '20%' },
+                                        { sWidth: '10%' }
+           
+                                    ] 
+                                } );
+                            } );
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

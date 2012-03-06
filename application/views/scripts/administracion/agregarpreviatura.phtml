@@ -1,0 +1,90 @@
+<?php
+$session = new \Zend_Session_Namespace();
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+
+
+<div class="span16">
+    <h2>Agregar Previatura a  <a href="/administracion/infomateria/idmateria/<?php echo $this->selectedMateria->getId(); ?>"><?php echo $this->selectedMateria->getNombre(); ?></a></h2>
+    <br>        
+
+    <br>
+    <form action="#" method="post">
+        <fieldset>
+            <div class="span10">
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="materias">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Periodo</th>
+                            <th>Creditos</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php foreach ($this->listaMaterias as $materia) : ?>
+                            <tr class="even gradeA" >
+                                <td class="center"><?php echo $materia['nombre']; ?></td>
+                                <td class="center"><?php echo $materia['numero']; ?></td>
+                                <td class="center"><?php echo $materia['creditos'] ?></td>
+                                <td class="center"><input type="checkbox" name="materias[]" value="<?php echo $materia['id']; ?>" /></td>	  
+                            </tr>     
+                        <?php endforeach; ?>      
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="row show-grid">
+                <div class="span4 offset2">
+                    <button class="btn primary icon alternative add" type="submit">Agregar</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <div class="span10">
+        <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == true) : ?>
+            <div class="alert-message success" id="add-ok">
+                <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+                <p>La previatura ha sido asociada correctamente.</p>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+            <div class="alert-message error" id="add-failed">   
+                <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+                <p>La previatura no ha sido agregada, verifique que no sea una materia posterior o ya sea previatura de dicha materia.</p>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+<a href="javascript:window.history.back();">&laquo; Volver </a>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('#materias').dataTable({
+            "bPaginate": true,
+            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false,
+            "aaSorting": [[ 1, "asc" ]],
+            "sScrollY": "250px",
+            "bPaginate": false,
+            "oLanguage": {
+                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                "sZeroRecords": "No hay registros",
+                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                "sSearch":"Buscar por:"
+            }
+        } );
+    } );
+</script>

@@ -1,0 +1,76 @@
+<?php
+$session = new Zend_Session_Namespace();
+include("tabBar.php");
+include("dataTables.php");
+?>
+<script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+
+<div class="row show-grid">
+    <div class="span12 offset1">
+        <h2>Subir Material</h2>
+
+        </br>
+
+        <form action="#" method="post" enctype="multipart/form-data">
+            <fieldset>
+                <div class="span3">
+                    <div class="clearfix">
+                        <h5>Materia:&nbsp;</h5>
+                        <select name="materia" id="materia">
+                            <?php foreach ($this->materias as $materia) { ?>
+                                <option value="<?php echo $materia->getId(); ?>"><?php echo $materia->getNombre(); ?></option>
+                            <?php } ?>
+
+                        </select>
+                    </div> 
+
+                </div>
+                <div class="row show-grid">
+
+                    <div class="well" >
+                        <div class="clearfix">
+                            <label for="archivo">Archivo a Subir:</label>
+                            <div class="input">
+                                <input class="input-xxlarge" id="archivo" name="archivo" type="file" />
+                            </div>
+                        </div>
+                        <span class="help-block">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             Formatos aceptados: <strong>.doc .ppt .xls .jpeg .png .pdf</strong>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       Tamaño Maximo: <strong>10 MB</strong>
+                        </span>
+
+
+                    </div><!-- /clearfix -->
+
+                </div> 
+
+                <div class="row show-grid">
+                    <div class="span4 offset9"><button class="btn primary icon alternative add" type="submit">Agregar Material</button></div>
+                </div>
+            </fieldset>
+        </form>
+
+
+        <div class="row show-grid">
+            <div class="span8 offset1">
+
+                <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == 1) : ?>
+                    <div class="alert-message success" id="add-ok" >
+                        <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+                        <p align="center">El material ha sido cargado.</p>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($this->pudoAgregar) && $this->pudoAgregar != 1) : ?>
+                    <div class="alert-message error" id="add-failed">
+                        <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+                        <p><?php echo $this->pudoAgregar; ?>.</p>
+                    </div>
+                <?php endif; ?>
+
+            </div>
+        </div>
+        <a href="javascript:window.history.back();">&laquo; Volver </a>
+    </div>
+</div>
+

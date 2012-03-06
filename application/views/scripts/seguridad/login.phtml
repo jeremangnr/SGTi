@@ -1,0 +1,30 @@
+<div class="row show-grid">
+    <div class="span5 offset5">
+        </br></br></br></br></br></br>
+        <div class="span5">
+            <div class="well" >
+                <center><h2> Inicio de sesion </h2></center>
+                </br>
+                <form id="frm" action="" method="post">
+                    <center>
+                        <input type="text" placeholder="Usuario" id="usuario" maxlength="8" name="usuario" />
+                    </center></br></br>
+                    <center>
+                        <input type="password" placeholder="Contraseña" id="password" maxlength="15" name="password" />
+                    </center></br></br>
+                    <center>
+                        <input type="submit" class="span4 btn primary icon alternative arrowright" value="Ingresar" value="submit" />
+                    </center>
+                </form>
+            </div> 
+        </div>
+        <?php if($this->mensaje !=null) { ?>
+            <div class="alert-message error" id="add-failed">
+                <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+               <center> <p> <?php echo $this->mensaje; ?></p> </center>
+            </div>
+        <?php } ?>
+
+        </br></br></br></br></br></br>  </br></br></br></br></br></br>
+    </div>
+</div>

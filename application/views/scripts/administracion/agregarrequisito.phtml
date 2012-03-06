@@ -1,0 +1,56 @@
+<?php include("tabBar.php"); ?>
+
+<div class="span12">
+
+    
+    <h1>Agregar Requisito a <a href="/administracion/infoplanr/id/<?php echo $this->plan->getId(); ?>"><?php echo $this->plan->getNombre(); ?></a> </h1>
+
+    <form action="#" method="post">
+        <fieldset>
+
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('anio', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="nombre">Requisito</label>     
+                <div class="input">
+                    <input class="span8" id="nombre" name="nombre" maxlength="100" type="text" value="<?php echo $this->form->getValue('nombre'); ?>"/> 
+                    <?php if (!is_null($this->errors) && array_key_exists('nombre', $this->errors)) : ?>
+                        <span class="help-inline">*</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+            <div class="row show-grid">
+                <div class="span4 offset9"><button class="btn primary icon alternative add" type="submit">Agregar</button></div>
+            </div>
+        </fieldset>
+    </form>
+    <?php print_r($this->errors); ?>    
+
+    <?php if ($this->errors != null) : ?>      
+        <div class="clearfix error">
+            <span class="help-inline">Se han encontrado errores en el formulario, por favor complete todos los campos correctamente</span>
+        </div><!-- /clearfix -->
+    <?php endif; ?>
+
+
+    <div class="row show-grid">
+        <div class="span8 offset1">
+
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == true) : ?>
+                <div class="alert-message success" id="add-ok" >
+                    <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+                    <p align="center">
+                        El requisito ha sido agregado correctamente.
+                    </p>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+                <div class="alert-message error" id="add-failed">
+                    <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+                    <p>El curso no ha sido agregado.</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <a href="javascript:window.history.back();">&laquo; Volver </a>
+</div>

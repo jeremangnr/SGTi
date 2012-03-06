@@ -1,0 +1,126 @@
+<?php
+$session = new Zend_Session_Namespace();
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+
+<div class="row show-grid">
+    <div class="span16 offset0">
+        <div class="row">           
+            <div class="span9"><br><br>             
+		<h2>Cursos de  <?php echo ($this->selectedAlumno->getNombre() . " " . $this->selectedAlumno->getApellido()); ?></h2>
+                <br>        
+                <br>
+                <h3>Materias:</h3>
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="planes">
+                    <thead>
+                        <tr>
+                            <th>Materia</th>
+                            <th>Periodo</th>
+                            <th>Curso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if($this->listaCursos != null){ ?>
+                        <?php foreach($this->listaCursos as $inscripcionCurso) {?>
+                          <tr class="even gradeA" class="even gradeA" onclick="window.location.href='/administracion/vercursosalumno/aluid/<?php echo $this->selectedAlumno->getId();?>/cursoid/<?php echo $inscripcionCurso->getId();?>'">
+                          <td class="center"><?php echo $inscripcionCurso->getCurso()->getMateria()->getNombre();?></td>
+                          <td class="center"><?php echo $inscripcionCurso->getCurso()->getMateria()->getPeriodo()->getNumero();?></td>
+                          <td class="center"><?php echo $inscripcionCurso->getCurso()->getAnio();?></td>
+                          </tr>
+                          <?php }} ?>
+                    </tbody>
+                </table>
+		<br><br>
+		<?php if (isset($this->selectedInscripcionCurso)) { ?>
+		    <div class="row show-grid">
+			<div class="span3 offset">
+			    <button id="editarNotas"  type="button" class="btn primary icon alternative edit"  onclick="window.location.href='/administracion/editarnotas/aluid/<?php echo $this->selectedAlumno->getId();?>/inscursoid/<?php echo $this->selectedInscripcionCurso->getId();?>'" >Actualizar notas</button>
+			</div>		    		    
+		    </div>
+		<?php } ?>
+		<br><br>
+                <script type="text/javascript" charset="utf-8">
+  
+                    $(document).ready(function() {
+                        $('#planes').dataTable({
+                            "bPaginate": true,
+                            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+                            "bLengthChange": false,
+                            "bFilter": true,
+                            "bSort": true,
+                            "bInfo": true,
+                            "bAutoWidth": false,
+                            "aaSorting": [[ 1, "asc" ]],
+                            "sScrollY": "300px",
+                            "bPaginate": false,
+                            "oLanguage": {
+                                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                                "sZeroRecords": "No hay registros",
+                                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                                "sSearch":"Buscar por:"
+                            },
+                            "aoColumns" : [
+                                { sWidth: '60%' },
+                                { sWidth: '20%' },
+                                { sWidth: '20%' }
+           
+                            ] 
+                        } );
+                    } );
+                </script>
+            </div>
+	     <div class="span7">
+		 <?php if (isset($this->selectedInscripcionCurso)) { ?>
+		<br><br><br>
+		<center><h1>Info de Curso</h1></center>
+                <form action="#" method="post">
+                    <fieldset>			
+                        <div class=" clearfix">
+                            <label>Nombre: &nbsp;</label> 
+                            <div class="input">
+                                <input class="span3"  id="nombre" name="nombre" maxlength="25" readonly type="text" value="<?php echo $this->selectedInscripcionCurso->getCurso()->getMateria()->getNombre(); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                         </br>
+                         <div class=" clearfix">
+                            <label>Año: &nbsp;</label> 
+                            <div class="input">
+                                <input class="span3"  id="nombre" name="nombre" maxlength="25" readonly type="text" value="<?php echo $this->selectedInscripcionCurso->getCurso()->getAnio(); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br>
+                        <div class=" clearfix">
+                            <label for="estado">Estado: &nbsp;</label> 
+                            <div class="input">
+                                <input class="span4"  id="anio" name="estado" maxlength="25" type="text"readonly value="<?php echo $this->selectedInscripcionCurso->getEstado(); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br>
+                        <div class=" clearfix">
+                            <label for="notaAprobacion">Nota Obtenida: &nbsp;</label>
+                            <div class="input">
+                                <input class="span4" id="descripcion" name="notaAprobacion" maxlength="25" readonly value="<?php if($this->selectedInscripcionCurso->getNotaObtenida()){echo $this->selectedInscripcionCurso->getNotaObtenida();} else{ echo "No se ha obtenido nota aún";}?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br></br>
+                    </fieldset>
+                </form>
+                <div class="row show-grid">
+                    <div class="span3 offset1">
+                        <button type="button" id="verModificaciones" class="btn primary icon alternative edit" onclick="window.location.href='/administracion/vercalificaciones/aluid/<?php echo $this->selectedAlumno->getId();?>/cursoid/<?php echo $this->selectedInscripcionCurso->getCurso()->getId();?>'" >Ver Calificaciones</button>
+                    </div>
+                    <div class="span3">
+                        <button id="verAsistencias"  type="submit" class="btn primary icon alternative edit"  onclick="window.location.href='/administracion/verasistencias/aluid/<?php echo $this->selectedAlumno->getId();?>/cursoid/<?php echo $this->selectedInscripcionCurso->getCurso()->getId();?>'" >Ver Asistencias</button>
+                    </div>		    		    
+                </div>
+		<?php } ?>
+            </div>
+        </div>
+            <a href="javascript:window.history.back();">&laquo; Volver </a>
+    </div> 
+
+</div>

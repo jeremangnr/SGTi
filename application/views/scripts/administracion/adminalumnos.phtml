@@ -1,0 +1,66 @@
+<?php
+$session = new \Zend_Session_Namespace();
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<div class="span16">
+    <h2>Administracion Alumnos</h2>
+    <br>        
+    <button class="btn primary icon alternative add" onclick="window.location.href='/administracion/agregaralumno'">Agregar Alumno</button>&nbsp;
+    <button class="btn primary icon alternative log" onclick="window.location.href='/administracion/inscribiralumnosaplan'">Inscribir Alumnos a Plan</button>&nbsp;
+    <button class="btn primary icon alternative log" onclick="window.location.href='/administracion/inscribiralumnosacurso'">Inscribir Alumnos a Curso</button>&nbsp;
+
+</div>
+<br>
+
+<div class="span12">
+    <table table cellpadding="0" cellspacing="0" border="0" class="display" id="alumnos">
+        <thead>
+            <tr>
+                <th>Cedula</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Inscripto</th>
+                    
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->listaalumnos as $alumno) : ?>
+                <tr class="even gradeA" onclick="window.location.href='/administracion/infoalumno/id/<?php echo $alumno->getId(); ?>'">
+                    <td class="center"><?php echo $alumno->getCi(); ?></td>
+                    <td class="center"><?php echo $alumno->getNombre(); ?></td>
+                    <td class="center"><?php echo $alumno->getApellido(); ?></td>	    
+                    <td class="center"><?php echo (is_null($alumno->getInscripcion())) ? "<a style='color:#E51616'>No esta inscripto todavia</a>" : "Inscripto"; ?></td>
+                </tr>     
+            <?php endforeach; ?>      
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('#alumnos').dataTable({
+            "bPaginate": true,
+            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false,
+            "aaSorting": [[ 1, "asc" ]],
+            "sScrollY": "250px",
+            "bPaginate": false,
+            "oLanguage": {
+                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                "sZeroRecords": "No hay registros",
+                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                "sSearch":"Buscar por:"
+            }
+        } );
+    } );
+</script>

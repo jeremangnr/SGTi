@@ -1,0 +1,148 @@
+<script type="text/javascript" src="/js/treeMenu/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="/js/treeMenu/scriptbreaker-multiple-accordion-1.js"></script>
+<script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
+
+
+
+<div class="row show-grid">
+    <div class="span16">
+        <div class="row">
+            <div class="span4">
+                <div class="well">
+                    <h2>Foro</h2>
+                    </br>
+                    <ul class="topnav">
+                        <h5> Planes</h5>
+                        <?php foreach ($this->listaplanes as $plan) : ?>
+                            <li><a href="#"> <?php echo $plan->getNombre(); ?></a>
+                                <ul style="display: none; ">
+                                    <h5> Periodos</h5>
+                                    <?php foreach ($plan->getPeriodos() as $periodo) : ?>
+                                        <li><a href="#"><?php echo $periodo->getNumero(); ?></a>
+                                            <ul style="display: none; ">
+                                                <h5>Materias</h5>
+                                                <?php foreach ($periodo->getMaterias() as $materia) : ?>
+                                                    <li><a href="<?php echo $materia->getId(); ?>"><?php echo $materia->getNombre(); ?></a>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <script language="JavaScript">
+ 
+                        $(document).ready(function() {
+                            //use the scriptbreaker.com multiple accordion menu
+                            $(".topnav").accordion({
+                                accordion:true,
+                                speed: 500,
+                                closedSign: ' [+]',
+                                openedSign: ' [-]'
+                            });
+                        });
+ 
+                    </script>
+                </div> 
+            </div>
+            <div class="span11">   
+                <div class="row show-grid">
+                    <div class="span12">  
+                        </br></br>
+                        <div class="span12">
+
+                            <div class="row">
+                                <div class="span3"> <h3>Usuario</h3>  </div> 
+                                <div class="span1 offset8 pull-right"><span class="label default ">fecha</span> </div>
+                            </div>
+                            
+                            <h2>Tema a discutir en el foro, solo el titulo va a aca</h2>
+                            </br>
+                            <p>Donec id elit non mi porta gravida at eget metus. Fusce on mi porta gravida at eget metus. Fusce on mi porta gravida at eget metus. Fusce on mi porta gravida at eget metus. Fusce  dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, .</p>
+                            <hr></hr>
+                        </div>
+                        </br>
+                        <div class="row show-grid" style=" padding-left:10px">
+                            <div class="span11 well" style=" background:#a9d4e9">
+                                <div class="row">
+                                    <div class="span3"> <h3>Usuario dijo</h3>  </div>
+                                    <div class="span1 offset7 pull-right"><span class="label default ">fecha</span> </div>
+                                </div></br>
+                                <p>Donec id elit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, .</p>
+                                <hr></hr>
+                            </div>
+                            <div class="span11 well" style=" background:#a9d4e9">
+                                <div class="row">
+                                    <div class="span3"> <h3>Usuario dijo</h3>  </div>
+                                    <div class="span1 offset7 pull-right"><span class="label default ">fecha</span> </div>
+                                </div></br>
+                                <p>Donec id elit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, .</p>
+                                <hr></hr>
+                            </div>
+                            <div class="span11 well" style=" background:#a9d4e9">
+                                <div class="row">
+                                    <div class="span3"> <h3>Usuario dijo</h3>  </div>
+                                    <div class="span1 offset7 pull-right"><span class="label default ">fecha</span> </div>
+                                </div></br>
+                                <p>Donec id elit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, .</p>
+                                <hr></hr>
+                            </div>
+                            <div class="span11 well" style=" background:#a9d4e9">
+                                <div class="row">
+                                    <div class="span3"> <h3>Usuario dijo</h3>  </div>
+                                    <div class="span1 offset7 pull-right"><span class="label default ">fecha</span> </div>
+                                </div></br>
+                                <p>Donec id elit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, .</p>
+                                <hr></hr>
+                            </div>
+                            <div class="span11 well" style=" background:#a9d4e9">
+                                <div class="row">
+                                    <div class="span3"> <h3>Usuario dijo</h3>  </div>
+                                    <div class="span1 offset7 pull-right"><span class="label default ">fecha</span> </div>
+                                </div></br>
+                                <p>Donec id elit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, .</p>
+                                <hr></hr>
+                            </div>
+                            <div class="span11 well" style=" background:#a9d4e9">
+                                <div class="row">
+                                    <div class="span3"> <h3>Usuario dijo</h3>  </div>
+                                    <div class="span1 offset7 pull-right"><span class="label default ">fecha</span> </div>
+                                </div></br>
+                                <p>Donec id elit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, .</p>
+                                <hr></hr>
+                            </div>
+                            <div class="span11 well" style=" background:#a9d4e9">
+                                <div class="row">
+                                    <div class="span3"> <h3>Usuario dijo</h3>  </div>
+                                    <div class="span1 offset7 pull-right"><span class="label default ">fecha</span> </div>
+                                </div></br>
+                                <p>Donec id elit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, .</p>
+                                <hr></hr>
+                            </div>
+                            <div class="span11 well" style=" background:#a9d4e9">
+                                <div class="row">
+                                    <div class="span3"> <h3>Usuario dijo</h3>  </div>
+                                    <div class="span1 offset7 pull-right"><span class="label default ">fecha</span> </div>
+                                </div></br>
+                                <p>Donec id elit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metuslit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, .</p>
+                                <hr></hr>
+                            </div>
+                            <div class="span11 well" style=" background:#a9d4e9">
+                                <h3>Comentar:</h3>
+                                <textarea class="ckeditor" id="comentario" name="contenido" rows="10" maxlength="1000"></textarea> 
+                                </br>
+                                <div class="row show-grid">
+                                    <div class="span2 offset9"><button class="btn primary " type="submit">Comentar</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

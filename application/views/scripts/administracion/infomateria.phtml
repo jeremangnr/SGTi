@@ -1,0 +1,128 @@
+<?php
+include("tabBar.php");
+include("dataTables.php");
+?>
+<script type="text/javascript">
+    function activateInputs(){ 
+        document.getElementById("nombre").removeAttribute('readonly');
+        document.getElementById("creditos").removeAttribute('readonly');
+        document.getElementById("tipoAprobacion").removeAttribute('readonly');
+        document.getElementById("modificar").disabled=false;
+        document.getElementById("editar").disabled=true;
+    }   
+    function deactivateInputs(){ 
+        
+        document.getElementById("nombre").readOnly =true;
+        document.getElementById("creditos").readOnly =true;
+        document.getElementById("tipoAprobacion").readOnly =true;
+        document.getElementById("modificar").disabled=true;
+        document.getElementById("editar").disabled=false;
+    } 
+</script>
+
+<div class="row show-grid">
+    <div class="span16 offset1">
+        <h2>Info Materia: <?php echo $this->selectedMateria->getNombre(); ?> - Periodo <a href="/administracion/infoperiodo/idperiodo/<?php echo $this->selectedMateria->getPeriodo()->getId(); ?>"><?php echo $this->selectedMateria->getPeriodo()->getNumero(); ?></a> </h2>
+        <div class="row">
+            <div class="span7">
+
+                <form action="#" method="post">
+                    <fieldset>
+
+                        <div class=" clearfix">
+                            <label for="nombre">Nombre</label>    
+                            <div class="input">
+                                <input class="span4" id="nombre" name="nombre" maxlength="30" type="text" readonly value="<?php echo $this->form->getValue('nombre'); ?>" /> 
+                                <br/>
+                            </div>
+                        </div><!-- /clearfix -->
+
+                        <div class="clearfix">
+                            <label for="creditos">Creditos</label>    
+                            <div class="input">
+                                <input class="span2" id="creditos" name="creditos" maxlength="25" type="text" readonly value="<?php echo $this->form->getValue('creditos'); ?>" /> 
+                            </div>
+                        </div><!-- /clearfix -->                        
+                        <div class="clearfix">
+                            <label for="tipoAprobacion">Tipo Aprobacion</label>    
+                            <div class="input">
+                                <input class="span2" id="tipoAprobacion" name="tipoAprobacion" maxlength="25" type="text"  readonly value="<?php echo $this->form->getValue('tipoAprobacion'); ?>"  /> 
+                                <br/>
+                            </div>
+                        </div><!-- /clearfix -->
+                    </fieldset>
+                    <?php if ($this->errors != null) { ?>
+                        <?php print_r($this->errors); ?>
+                        <div class="clearfix error">
+                            <span class="help-inline">Se han encontrado errores en el formulario, por favor complete todos los campos correctamente</span>
+                        </div><!-- /clearfix -->
+                    <?php } ?>
+                    <div class="row show-grid">
+                        <div class="span2 offset2">
+                            <button type="button" id="editar" class="btn primary icon alternative edit" onclick="javascript:activateInputs();" >Editar</button>
+                        </div>
+                        <div class="span3">
+                            <button id="modificar" disabled="true" type="submit" class="btn primary icon alternative add" onclick="javascript:activateInputs();" >Modificar</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="span7">  <br>          
+                <h3>Cursos</h3>
+
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="cursos">
+                    <thead>
+                        <tr>
+
+                            <th>Año</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->selectedMateria->getCursos() as $curso) { ?>
+                            <tr class="even gradeA"   onclick="window.location.href='/administracion/infocurso/cursoid/<?php echo $curso->getId(); ?>'">
+                                <td class="center"><?php echo $curso->getAnio(); ?></td>
+
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+
+                </table>
+                <div class="row show-grid">
+
+                    <button class="btn primary icon alternative log" onclick="window.location.href='/administracion/infomateriap/idmateria/<?php echo ($this->selectedMateria->getId()); ?>'">Ver Previaturas</button>&nbsp;
+                    <button class="btn primary icon alternative log" onclick="window.location.href='/administracion/infomateriam/idmateria/<?php echo ($this->selectedMateria->getId()); ?>'">Ver Material</button>&nbsp;
+                    <button class="btn primary icon alternative add" onclick="window.location.href='/administracion/agregarcurso/idmateria/<?php echo ($this->selectedMateria->getId()); ?>'">Agregar Curso</button>&nbsp;
+                </div>
+                <script type="text/javascript" charset="utf-8">
+  
+                    $(document).ready(function() {
+                        $('#cursos').dataTable({
+                            "bPaginate": true,
+                            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+                            "bLengthChange": false,
+                            "bFilter": false,
+                            "bSort": true,
+                            "bInfo": true,
+                            "bAutoWidth": false,
+                            "aaSorting": [[ 1, "desc" ]],
+                            "sScrollY": "200px",
+                            "bPaginate": false,
+                            "oLanguage": {
+                                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                                "sZeroRecords": "No hay registros",
+                                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                                "sSearch":"Buscar por:"
+                            },
+                        } );
+                    } );
+                </script>
+            </div>
+        </div>
+        <a href="/administracion/infoperiodo/idperiodo/<?php echo $this->selectedMateria->getPeriodo()->getId(); ?>">&laquo; Volver </a>
+    </div>
+</div>

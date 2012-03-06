@@ -1,0 +1,61 @@
+<?php
+$session = new Zend_Session_Namespace();
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+<div class="span8">
+    <h2>Administracion Salones</h2>
+    <br>        
+    <button class="btn primary icon alternative add" onclick="window.location.href='/administracion/agregarsalon'">Agregar Salon</button><br><br>
+    <table table cellpadding="0" cellspacing="0" border="0" class="display" id="salones">
+        <thead>
+            <tr>
+                
+                <th>Nombre</th>
+                <th>Capacidad</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->listasalones as $salon) : ?>
+                <tr class="even gradeA" >
+                    <td class="center"><?php echo $salon->getNombre(); ?></td> 
+                    <td class="center"><?php echo $salon->getCapacidad(); ?></td>
+                    <td class="center"><button type="button" id="editar" class="span1 btn primary icon alternative edit" onclick="window.location.href='/administracion/modificarsalon/salonid/<?php echo $salon->getId(); ?>'"></button>&nbsp&nbsp<button type="button" id="editar" class="span1 btn danger icon alternative remove" onclick="window.location.href='/administracion/eliminarsalon/salonid/<?php echo ($salon->getId()); ?>'" ></button></td>
+                </tr>     
+            <?php endforeach; ?>  
+        </tbody>
+    </table>
+    </br></br>
+    <a href="javascript:window.history.back();">&laquo; Volver </a>
+</div>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('#salones').dataTable({
+            "bPaginate": true,
+            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false,
+            "aaSorting": [[ 0, "desc" ]],
+            "sScrollY": "250px",
+            "bPaginate": false,
+            "oLanguage": {
+                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                "sZeroRecords": "No hay registros",
+                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                "sSearch":"Buscar por:"
+            },
+            "aoColumns" : [
+                                 { sWidth: '35%' },
+                                { sWidth: '35%' },
+                                { sWidth: '30%' }
+                            ] 
+        } );
+    } );
+</script>

@@ -1,0 +1,68 @@
+<?php
+include("dataTables.php");
+?>
+
+<?php //echo($this->selectedCurso->getNombre()); ?>
+<div class="row show-grid">
+    <div class="span16 offset1">
+        <div class="span11">
+            <h2>Info Curso: <?php echo $this->selectedCurso->getAnio(); ?> - <a><?php echo $this->selectedCurso->getMateria()->getNombre(); ?></a>&nbsp;&nbsp;&nbsp;&nbsp; Docentes y Material</h2>
+        </div>
+        </br>
+        <div class="row show-grid">
+            <button class="span4 btn primary icon alternative " onclick="window.location.href='/alumnos/infocursoec/cursoid/<?php echo ($this->selectedCurso->getId()); ?>/aluid/<?php echo ($this->selectedAlumno->getId()); ?>'">Clases - Horarios</button>&nbsp;
+            <button class="span5 btn primary icon alternative " onclick="window.location.href='/alumnos/vercurso/cursoid/<?php echo ($this->selectedCurso->getId()); ?>/aluid/<?php echo ($this->selectedAlumno->getId()); ?>'">Asistencias - Eventos Calificacion</button>&nbsp;
+        </div>
+        </br>
+        <div class="row">
+
+            <div class="span7 offset1">            
+                <h3>Docentes</h3>
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="docentes">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->selectedCurso->getDocentes() as $docente) : ?>
+                            <tr class="even gradeA">
+                                <td class="center"><?php echo $docente->getNombre(); ?></td>
+                                <td class="center"><?php echo $docente->getApellido(); ?></td>
+                            </tr>     
+                        <?php endforeach; ?> 
+                    </tbody>
+
+                </table>
+                <script type="text/javascript" charset="utf-8">
+  
+                    $(document).ready(function() {
+                        $('#docentes').dataTable({
+                            "bPaginate": true,
+                            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+                            "bLengthChange": false,
+                            "bFilter": true,
+                            "bSort": true,
+                            "bInfo": true,
+                            "bAutoWidth": false,
+                            "aaSorting": [[ 1, "asc" ]],
+                            "sScrollY": "220px",
+                            "bPaginate": false,
+                            "oLanguage": {
+                                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                                "sZeroRecords": "No hay registros",
+                                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                                "sSearch":"Buscar por:"
+                            }
+                        } );
+                    } );
+                </script>
+            </div>
+        </div>
+        <a href="javascript:window.history.back();">&laquo; Volver </a>
+    </div>
+</div>

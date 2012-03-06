@@ -1,0 +1,45 @@
+<?php include("tabBar.php"); ?>
+
+<div class="span12">
+
+
+    <h1>Enviar Mail</h1>
+
+
+    <form action="#" method="post">
+        <fieldset>
+
+
+            <div class="clearfix">
+                <label for="Correo">Correo</label>    
+                <div class="input">
+                    <input class="xlarge" id="xlInput" name="mail" maxlength="25" type="text" value="<?php echo ($this->mails); ?>" readonly /> 
+
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+            <div class="clearfix">
+                <label for="asunto">Asunto</label>    
+                <div class="input">
+                    <input class="xlarge" id="xlInput" name="asunto" maxlength="25" type="text"/> 
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+     
+            <div class="clearfix">
+                <label for="contenido">Mensaje</label>    
+                <div class="input">
+                    <textarea class="span10" id="xlInput" name="contenido" rows="10" maxlength="1000"></textarea> 
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+        </fieldset>
+
+        <div class="row show-grid">
+            <div class="span4 offset10"><button class="btn primary icon alternative arrowright" type="submit">Enviar</button></div>
+        </div>
+
+    </form>
+
+    <a href="javascript:window.history.back();">&laquo; Volver </a>
+</div>

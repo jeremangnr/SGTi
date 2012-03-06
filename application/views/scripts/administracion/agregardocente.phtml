@@ -1,0 +1,179 @@
+<?php include("tabBar.php"); ?>
+
+<div class="span12">
+    <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <div class="row show-grid">
+        <div class="span16">
+            <form action="#" method="post">
+                <fieldset>
+                    <div class="row">
+                        <div class="span8">
+                            <legend>Ingresar Docente</legend>
+                            </br></br>
+                            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('ci', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                                <label for="ci">Cédula<a>*</a></label>    
+                                <div class="input">
+                                    <input class="xlarge" id="xlInput" name="ci" maxlength="8" type="text" value="<?php echo $this->form->getValue('ci'); ?>"/> 
+                                    <br/>
+                                    <br/>
+                                    <?php if (!is_null($this->errors) && array_key_exists('ci', $this->errors)) : ?>
+                                        <span class="help-inline">Debe ingresar una CI válida (solo numeros)</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div><!-- /clearfix -->
+
+                            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('nombre', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                                <label for="nombre">Nombre<a>*</a></label>    
+                                <div class="input">
+                                    <input  class="xlarge" id="xlInput" name="nombre" maxlength="60" type="text" value="<?php echo $this->form->getValue('nombre'); ?>"/> 
+                                    <?php if (!is_null($this->errors) && array_key_exists('nombre', $this->errors)) : ?>
+                                        <br/>
+                                        <br/>    
+                                        <span class="help-inline">Debe ingresar un nombre válido (solo letras)</span>
+                                    <?php endif; ?>
+                                    <br/>
+                                </div>
+                            </div><!-- /clearfix -->
+
+                            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('apellido', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                                <label for="apellido">Apellido<a>*</a></label>    
+                                <div class="input">
+                                    <input  class="xlarge" id="xlInput" name="apellido" maxlength="60" type="text" value="<?php echo $this->form->getValue('apellido'); ?>"/> 
+                                    <?php if (!is_null($this->errors) && array_key_exists('apellido', $this->errors)) : ?>
+                                        <br/>
+                                        <br/>
+                                        <span class="help-inline">Debe ingresar un apellido válido (solo letras)</span>
+                                    <?php endif; ?>
+                                    <br/>
+                                </div>
+                            </div><!-- /clearfix -->
+
+                            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('fechaNac', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                                <label for="fechaNac">Fecha Nacimiento<a>*</a></label>    
+                                <div class="input">
+                                    <input data-datepicker="datepicker" name="fechaNac" class="small" type="text" readonly style="cursor:default;" value="<?php echo $this->form->getValue('fechaNac'); ?>"/>
+                                    <?php if (!is_null($this->errors) && array_key_exists('fechaNac', $this->errors)) : ?>
+                                        <br/>
+                                        <br/>
+                                        <span class="help-inline">Debe ingresar una fecha</span>
+                                    <?php endif; ?>
+                                    <br/>
+                                </div>
+                            </div><!-- /clearfix -->
+
+                            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('telefono', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                                <label for="telefono">Teléfono</label>    
+                                <div class="input">
+                                    <input  class="xlarge" id="xlInput" name="telefono" maxlength="15" type="text" value="<?php echo $this->form->getValue('telefono'); ?>"/> 
+                                    <?php if (!is_null($this->errors) && array_key_exists('telefono', $this->errors)) : ?>
+                                        <br/>
+                                        <br/>
+                                        <span class="help-inline">Debe ingresar un telefono válido (solo numeros)</span>
+                                    <?php endif; ?>
+                                    <br/>
+                                </div>
+                            </div><!-- /clearfix -->
+
+                            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('celular', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                                <label for="celular">Celular</label>    
+                                <div class="input">
+                                    <input  class="xlarge" id="xlInput" name="celular" maxlength="9" type="text"  value="<?php echo $this->form->getValue('celular'); ?>"/> 
+                                    <?php if (!is_null($this->errors) && array_key_exists('celular', $this->errors)) : ?>
+                                        <span class="help-inline">Debe ingresar un celular válido (solo números) </span>
+                                    <?php endif; ?>
+                                    <br/>
+                                </div>
+                            </div><!-- /clearfix -->
+
+                            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('localidad', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                                <label for="localidad">Localidad<a>*</a></label>    
+                                <div class="input">
+                                    <input   class="xlarge" id="xlInput" name="localidad" maxlength="60" type="text" value="<?php echo $this->form->getValue('localidad'); ?>"/> 
+                                    <?php if (!is_null($this->errors) && array_key_exists('localidad', $this->errors)) : ?>
+                                        <span class="help-inline">Debe ingresar una localidad válida (solo letras)</span>
+                                    <?php endif; ?>
+                                    <br/>
+                                </div>
+                            </div><!-- /clearfix -->
+
+
+                            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('mail', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                                <label for="mail">Mail<a>*</a></label>    
+                                <div class="input">
+                                    <input   class="xlarge" id="xlInput" name="mail" maxlength="60" type="text"  value="<?php echo $this->form->getValue('mail'); ?>"/> 
+                                    <?php if (!is_null($this->errors) && array_key_exists('mail', $this->errors)) : ?>
+                                        <span class="help-inline">Debe ingresar un mail válido (Ej: minombre@dominio.com)</span>
+                                    <?php endif; ?>
+                                    <br/>
+                                </div>
+                            </div><!-- /clearfix -->
+
+
+                        </div> 
+                        <div class="span8">
+                            </br> </br> </br> </br> 
+                            <div class="row show-grid">
+                                <div class="span5 ">
+                                    <button class="btn primary icon alternative add" type="submit">Agregar</button>
+                                </div>
+                            </div>
+                            </br> </br> </br> </br>
+                            <?php if ($this->errors != null) { ?>      
+                                <div class="row show-grid">
+                                    <div class="span5">    
+                                        <div class="clearfix error">
+                                            <span class="help-inline">Se han encontrado errores en el formulario, por favor complete todos los campos correctamente</span>
+                                        </div><!-- /clearfix -->
+                                    </div>
+                                </div>
+                            <?php } ?>
+
+                            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == true) : ?>
+                                <div class="alert-message success" id="add-ok">
+                                    <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+                                    <p>El docente ha sido agregado correctamente.</p>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+                                <div class="alert-message error" id="add-failed">
+                                    <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+                                    <p>El docente no ha sido agregado.</p>
+                                </div>
+                            <?php endif; ?>
+                        </div> 
+                </fieldset>
+            </form>
+        </div> 
+    </div> 
+
+
+    <a href="/administracion/admindocentes">&laquo; Volver </a>
+</div>
+
+<!--Este script cambia el formato de l a fecha a dia mes y año si la quieren de otra forma solamente hay q comentar el script y queda normal -->
+<script>
+    $.extend($.fn.datepicker.defaults, {
+        parse: function (string) {
+            var matches;
+            if ((matches = string.match(/^(\d{2,2})\/(\d{2,2})\/(\d{4,4})$/))) {
+                return new Date(matches[3], matches[1] - 1, matches[2]);
+            } else {
+                return null;
+            }
+        },
+        format: function (date) {
+            var
+            month = (date.getMonth() + 1).toString(),
+            dom = date.getDate().toString();
+            if (month.length === 1) {
+                month = "0" + month;
+            }
+            if (dom.length === 1) {
+                dom = "0" + dom;
+            }
+            return dom + "-" + month + "-" + date.getFullYear();
+        }
+    });  
+</script>

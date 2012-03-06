@@ -1,0 +1,113 @@
+<?php
+$session = new \Zend_Session_Namespace();
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+
+<div class="span16">
+    <h2>Inscribir Alumnos a Plan</h2>
+
+    <form action="#" method="post">
+        <fieldset>
+            <div class="row show-grid">
+                <div class="span4 offset1 ">
+                    <div class="clearfix">
+                        <h4>Plan:&nbsp;</h4>
+                        <select name="planes" id="normalSelect">
+                            <?php foreach ($this->listaplanes as $plan) : ?>
+                                <option value="<?php echo $plan->getId(); ?>"><?php echo $plan->getNombre(); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div><!-- /clearfix -->
+                </div>
+
+                <div class="span12">
+                    <table table cellpadding="0" cellspacing="0" border="0" class="display" id="alumnos">
+                        <thead>
+                            <tr>
+                                <th>Cedula</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Estado Inscripcion</th>
+                                <th>Seleccionar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($this->listaalumnos != null) : ?>
+                                <?php foreach ($this->listaalumnos as $alumno) : ?>
+                                    <tr class="even gradeA">
+                                        <td class="center"><?php echo $alumno->getCi(); ?></td>
+                                        <td class="center"><?php echo $alumno->getNombre(); ?></td>
+                                        <td class="center"><?php echo $alumno->getApellido(); ?></td>
+                                        <td class="center"><?php echo ($alumno->getReq() == "si") ? "Inscripcion Pendiente" : "<a style='color:#E51616'>Falta Requistos</a>";?></td>                                        
+                                        <td class="center"><input type="checkbox" name="alumnos[]" value="<?php echo $alumno->getId(); ?>" <?php if ($alumno->getReq() == "no") echo " disabled";?>/></td>	  
+                                    </tr>    
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+
+                    </table>
+
+                </div>
+                <div class="row show-grid">
+                    <div class="span4 offset9 ">
+                        <button id="inscribir" type="submit" class="btn primary icon alternative edit"  >Inscribir Alumnos</button>
+                    </div>
+                </div>
+        </fieldset>
+    </form>
+    <div class="row show-grid">
+        <div class="span8 offset1">
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar != false) : ?>
+                <div class="alert-message success" id="add-ok" >
+                    <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+                    <p align="center">Los alumnos se han inscripto al plan</p>
+                    </br>                    
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+                <div class="alert-message error" id="add-failed">
+                    <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+                    <p>Error, no se ha podido inscribir los alumnos</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('#alumnos').dataTable({
+                "bPaginate": true,
+                //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+                "bLengthChange": false,
+                "bFilter": true,
+                "bSort": true,
+                "bInfo": true,
+                "bAutoWidth": false,
+                "aaSorting": [[ 1, "asc" ]],
+                "sScrollY": "200px",
+                "bPaginate": false,
+                "oLanguage": {
+                    "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                    "sZeroRecords": "No hay registros",
+                    "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "sInfoFiltered": "(filtered from _MAX_ total records)",
+                    "sSearch":"Buscar por:"
+                },
+                "aoColumns" : [
+                    { sWidth: '25%' },
+                    { sWidth: '25%' },
+                    { sWidth: '30%' },
+                    { sWidth: '40%' },
+                    { sWidth: '10%' }
+                ]
+            } );
+        } );
+    </script>
+
+    <a href="javascript:window.history.back();">&laquo; Volver </a>
+</div>

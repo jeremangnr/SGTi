@@ -1,0 +1,170 @@
+<?php
+$session = new \Zend_Session_Namespace();
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+
+<div class="row show-grid">
+    <div class="span16 ">
+        <div class="row show-grid">
+            <div class="span8 offset1 ">
+                <h2>Agregar Evento Calificacion</h2>
+            </div> 
+        </div> <!-- /clearfix -->
+
+        <form action="#" method="post">
+            <fieldset>
+                <div class="row show-grid">
+                    <div class="span4">
+                        <div class="clearfix">
+                            <label>Plan:&nbsp;</label> 
+                            <div class="input">
+                                <input class="span3" readonly id="plan" name="plan" maxlength="20" type="text" value="<?php echo $this->selectedCurso->getMateria()->getPeriodo()->getPlanDeEstudio()->getNombre(); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                    </div>
+                    <div class="span4 offset1 ">
+                        <div class="clearfix">
+                            <label>Materia:&nbsp;</label>
+                            <div class="input">
+                                <input class="span3" readonly id="materia" name="materia" maxlength="3" type="text" value="<?php echo $this->selectedCurso->getMateria()->getNombre(); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                    </div>
+                    <div class="span4 offset1 ">
+                        <div class="clearfix">
+                            <label>Curso:&nbsp;</label>
+                            <div class="input">
+                                <input class="span3" readonly id="curso" name="curso" maxlength="3" type="text" value="<?php echo $this->selectedCurso->getAnio(); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span3">
+                        <div class="clearfix">
+                            <label for="tipoEvento">Tipo Evento:&nbsp;</label>
+                            <div class="input">
+                                <select name="tipoEvento" id="tipoEvento">
+                                    <?php if ($this->listaTipos != null) : ?>
+                                        <?php foreach ($this->listaTipos as $tipo) : ?>
+                                            <option value="<?php echo $tipo->getId(); ?>"><?php echo $tipo->getNombre(); ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        </div><!-- /clearfix -->
+                    </div>
+
+                    <div class="span2 offset3 ">
+                        <div class=" clearfix">
+                            <label>Nota Maxima:</label> 
+                            <div class="input">
+                                <input class="span1"  id="notaMaxima" name="notaMaxima" maxlength="3" type="text"/> 
+                            </div>
+                        </div> 
+                    </div><!-- /clearfix -->
+
+                    <div class="span2 offset1">
+                        <div class=" clearfix">
+                            <label>Nota Aprobacion:</label> 
+                            <div class="input">
+                                <input class="span1"  id="notaAprobacion" name="notaAprobacion" maxlength="3" type="text"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                    </div>
+                    <div class="span6">
+                        <div class=" clearfix">
+                            <label>Descripcion:</label> 
+                            <div class="input">
+                                <textarea class="span7" id="descripcion" name="descripcion" rows="2" maxlength="1000" style="width: 750px"><?php echo $this->form->getValue('contenido');?></textarea> 
+                    </div>
+                        </div><!-- /clearfix -->
+                    </div>
+
+
+                </div>
+                <div class="row show-grid">
+                    <div class="span14 offset1">
+                        <table table cellpadding="0" cellspacing="0" border="0" class="display" id="alumnos">
+                            <thead>
+                                <tr>
+                                    <th>Cedula</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Asistio</th>
+                                    <th>Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <tr class="even gradeA" >
+                                    <td class="center">4.374.714-5</td>
+                                    <td class="center">Agustin</td>
+                                    <td class="center">Cabral</td>
+                                    <td class="center"><input type="checkbox" name="asistio" value="1" checked/></td>
+                                    <td class="center"><input class="span1" id="nota" name="nota" maxlength="3" type="text"/>
+                                </tr>
+
+                                <tr class="even gradeA" >
+                                    <td class="center">4.374.714-5</td>
+                                    <td class="center">Agustin</td>
+                                    <td class="center">Cabral</td>
+                                    <td class="center"><input type="checkbox" name="asistio" value="1" checked/></td>
+                                    <td class="center"><input class="span1" id="nota" name="nota" maxlength="3" type="text"/>
+                                </tr>
+                                
+                            </tbody>
+
+                        </table>
+                        <div class="row show-grid">
+                            <div class="span4 offset11 ">
+                                <button id="inscribir" type="submit" class="btn primary icon alternative edit"  >Inscribir Alumnos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+        <a href="javascript:window.history.back();">&laquo; Volver </a>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('#alumnos').dataTable({
+            "bPaginate": true,
+            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false,
+            "aaSorting": [[ 1, "asc" ]],
+            "sScrollY": "200px",
+            "bPaginate": false,
+            "oLanguage": {
+                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                "sZeroRecords": "No hay registros",
+                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                "sSearch":"Buscar por:"
+            },
+            "aoColumns" : [
+                { sWidth: '30%' },
+                { sWidth: '30%' },
+                { sWidth: '30%' },
+                { sWidth: '5%' },
+                { sWidth: '5%' }
+           
+            ] 
+        } );
+    } );
+</script>
+

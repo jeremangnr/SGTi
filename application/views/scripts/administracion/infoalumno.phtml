@@ -1,0 +1,245 @@
+<?php
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+<script src="/js/modal.js"></script>
+<script src="/js/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript">
+    function activateInputs(){ 
+        document.getElementById("nombre").removeAttribute('readonly');
+        document.getElementById("ci").removeAttribute('readonly');
+        document.getElementById("apellido").removeAttribute('readonly');
+        document.getElementById("fechaNac").removeAttribute('readonly');
+        document.getElementById("telefono").removeAttribute('readonly');
+        document.getElementById("celular").removeAttribute('readonly');
+        document.getElementById("localidad").removeAttribute('readonly');
+        document.getElementById("mail").removeAttribute('readonly');
+        document.getElementById("modificar").disabled=false;
+        document.getElementById("editar").disabled=true;
+    }   
+    function deactivateInputs(){ 
+        document.getElementById("nombre").readOnly =true;
+        document.getElementById("ci").readOnly =true;
+        document.getElementById("apellido").readOnly =true;
+        document.getElementById("fechaNac").readOnly =true;
+        document.getElementById("telefono").readOnly =true;
+        document.getElementById("celular").readOnly =true;
+        document.getElementById("localidad").readOnly =true;
+        document.getElementById("mail").readOnly =true;
+        document.getElementById("modificar").disabled=true;
+        document.getElementById("editar").disabled=false;
+    } 
+</script>
+
+
+<div class="row show-grid">
+    <div class="span16">
+        <h1>Info Alumno</h1>
+        <div class="row">
+            <div class="span8">
+                <form action="#" method="post">
+                    <fieldset>
+                        <div class="clearfix">
+                            <label for="ci">Cedula</label>    
+                            <div class="input">
+                                <input class="xlarge" id="ci" name="ci" maxlength="8" type="text" readonly value="<?php echo $this->form->getValue('ci'); ?>"/> 
+                                <br/>
+                            </div>
+                        </div><!-- /clearfix -->
+
+                        <div class=" clearfix">
+                            <label for="nombre">Nombre</label>    
+                            <div class="input">
+                                <input  class="xlarge" id="nombre" name="nombre" maxlength="60" type="text" readonly value="<?php echo $this->form->getValue('nombre'); ?>"/> 
+                                <br/>
+                            </div>
+                        </div><!-- /clearfix -->
+
+                        <div class="clearfix">
+                            <label for="apellido">Apellido</label>    
+                            <div class="input">
+                                <input  class="xlarge" id="apellido" name="apellido" maxlength="60" type="text" readonly value="<?php echo $this->form->getValue('apellido'); ?>"/> 
+                                <br/>
+                            </div>
+                        </div><!-- /clearfix -->
+
+                        <div class="clearfix">
+                            <label for="fechaNac">Fecha Nacimiento</label>    
+                            <div class="input">
+                                <input data-datepicker="datepicker" id="fechaNac" name="fechaNac" class="small" type="text" readonly value="<?php echo $this->form->getValue('fechaNac'); ?>"/>
+                                <br/>
+                            </div>
+                        </div><!-- /clearfix -->
+
+                        <div class="clearfix">
+                            <label for="telefono">Telefono</label>    
+                            <div class="input">
+                                <input  class="xlarge" id="telefono" name="telefono" maxlength="15" type="text" readonly value="<?php echo $this->form->getValue('telefono'); ?>"/> 
+                                <br/>
+                            </div>
+                        </div><!-- /clearfix -->
+
+                        <div class="clearfix">
+                            <label for="celular">Celular</label>    
+                            <div class="input">
+                                <input  class="xlarge" id="celular" name="celular" maxlength="9" type="text"  readonly value="<?php echo $this->form->getValue('celular'); ?>"/> 
+                                <br/>
+                            </div>
+                        </div><!-- /clearfix -->
+
+                        <div class="clearfix">
+                            <label for="localidad">Localidad</label>    
+                            <div class="input">
+                                <input   class="xlarge" id="localidad" name="localidad" maxlength="60" type="text" readonly value="<?php echo $this->form->getValue('localidad'); ?>"/> 
+                                <br/>
+                            </div>
+                        </div><!-- /clearfix -->
+                        <div class="clearfix">
+                            <label for="mail">Mail</label>    
+                            <div class="input">
+                                <input   class="xlarge" id="mail" name="mail" maxlength="60" type="text"  readonly value="<?php echo $this->form->getValue('mail'); ?>"/> 
+                                <br/>
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br> 
+                        <div class="row show-grid">
+                            <div class="span2 offset2">
+                                <button type="button" id="editar" class="btn primary icon alternative edit" onclick="javascript:activateInputs();" >Editar</button>
+                            </div>
+                            <div class="span3">
+                                <button id="modificar" disabled="true" type="submit" class="btn primary icon alternative add" onclick="javascript:activateInputs();">Modificar</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="span8">
+                <div class="well" >
+                    <h3>Requisitos:</h3>
+                    <div class="clearfix">
+                        <!-- /clearfix -->
+
+
+                        <div class="input">
+                            <ul class="inputs-list">
+                                <li>
+                                    <label>
+                                        <input type="radio" name="optionsCheckboxes" value="no" <?php if($this->selectedAlumno->getReq()=="no") echo "checked" ?> />
+                                        <span> Faltan requisitos.</span>
+
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="optionsCheckboxes" value="si" <?php if($this->selectedAlumno->getReq()!="no") echo "checked" ?> />
+                                        <span> Requisitos entregados.</span>
+
+                                    </label>
+                                </li>
+                            </ul>
+                            <span class="help-block">
+                                <strong>Nota:</strong> Hasta que el alumno no cumpla todos los requisitos no se podra generar la inscripcion.
+                                <br></br>
+                            </span>
+                            <button class="btn primary icon alternative edit small" type="submit" onclick="window.location.href='/administracion/cambiarestadoequisitos/personaid/<?php echo ($this->selectedAlumno->getId()); ?>/estado/si'">Cambiar Estado</button>
+                        </div>
+                    </div> 
+
+                </div> 
+                <div class="row show-grid">
+
+                    <div class="span4">
+                        <button class="btn primary icon alternative log" type="submit"  onclick="window.location.href='/administracion/vercursosalumno/aluid/<?php echo ($this->selectedAlumno->getId()); ?>'">Ver Cursos </button>
+                    </div>
+                    </br> </br>
+                    <div class="span4 ">
+                        <button class="btn primary icon alternative mail" type="submit" onclick="window.location.href='/administracion/enviarmail/mails/<?php echo ($this->selectedAlumno->getMail()); ?>'">Enviar Mail</button>
+                    </div> 
+                    </br> </br>
+                    <div class="span4">
+                        <button class="btn primary icon alternative user" type="submit" onclick="window.location.href='/administracion/generarescolaridad/idalumno/<?php echo ($this->selectedAlumno->getId()); ?>'">Generar Escolaridad</button>
+                    </div>
+                    </br> </br>
+                    <div class="span4">
+                        <button class="btn primary icon alternative edit" type="submit" onclick="window.location.href='/administracion/cambiarcontrasena/personaid/<?php echo ($this->selectedAlumno->getId()); ?>'">Cambiar Contraseña</button>
+                    </div>
+                    </br> </br>
+		    <div class="span4">
+                        <button class="btn primary icon alternative edit" type="submit" onclick="window.location.href='/administracion/reporteAsistencias/idalumno/<?php echo ($this->selectedAlumno->getId()); ?>'">Reporte de Asistencias</button>
+                    </div>
+                    </br> </br>
+                    <div class="span3 ">
+                        <a class="btn danger icon alternative remove" data-controls-modal="eliminar" data-backdrop="static" >Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="javascript:window.history.back();">&laquo; Volver </a>
+    </div>  
+
+
+</div>   
+
+<script type="text/javascript" charset="utf-8">
+    $.extend($.fn.datepicker.defaults, {
+        parse: function (string) {
+            var matches;
+            if ((matches = string.match(/^(\d{2,2})\/(\d{2,2})\/(\d{4,4})$/))) {
+                return new Date(matches[3], matches[1] - 1, matches[2]);
+            } else {
+                return null;
+            }
+        },
+        format: function (date) {
+            var
+            month = (date.getMonth() + 1).toString(),
+            dom = date.getDate().toString();
+            if (month.length === 1) {
+                month = "0" + month;
+            }
+            if (dom.length === 1) {
+                dom = "0" + dom;
+            }
+            return dom + "-" + month + "-" + date.getFullYear();
+        }
+    });
+</script>
+
+<!-- ///////////////  Modal para Eliminar   /////////////////-->
+
+<!-- 
+<a class="btn primary icon alternative remove" data-controls-modal="eliminar" data-backdrop="static" >Eliminar</a>
+<script src="/js/modal.js"></script>      
+-->            
+<div id="eliminar" class="modal hide fade">
+    <?php if ($this->selectedAlumno->getInscripcion()) { ?>
+
+        <div class="modal-header">´
+            <a href="#" class="close">&times;</a>
+            <h3>No se puede eliminar alumno</h3>
+        </div>
+        <div class="modal-body">
+            <p>El alumno <?php echo $this->form->getValue('nombre') . ' ' . $this->form->getValue('apellido'); ?> esta inscripto a un plan.</p>
+        </div>
+        <div class="modal-footer">
+            <a type="button" id="editar" class="btn primary icon alternative" data-controls-modal="eliminar" data-backdrop="static" onclick="javascript:$('#eliminar').modal('close');" >Aceptar</a>
+
+        </div>
+    <?php } else { ?>
+
+        <div class="modal-header">
+            <a href="#" class="close">&times;</a>
+            <h3>Eliminar Alumno</h3>
+        </div>
+        <div class="modal-body">
+            <p>Esta seguro que desea eliminar a <?php echo $this->form->getValue('nombre') . ' ' . $this->form->getValue('apellido'); ?></p>
+        </div>
+        <div class="modal-footer">
+            <a type="button" id="editar" class="btn secondary" data-controls-modal="eliminar" data-backdrop="static" onclick="javascript:$('#eliminar').modal('close');" >Cancelar</a>
+            <a href="/administracion/eliminaralumno/id/<?php echo ($this->selectedAlumno->getId()); ?>" class="btn danger icon alternative remove"  >Eliminar</a>
+        </div>
+    <?php } ?>
+</div>
+<!-- ///////////////  Modal para Eliminar   /////////////////-->

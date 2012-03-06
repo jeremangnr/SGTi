@@ -1,0 +1,157 @@
+<?php
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+<script type="text/javascript">
+    function activateInputs(){ 
+        document.getElementById("nombre").removeAttribute('readonly');
+        document.getElementById("anio").removeAttribute('readonly');
+        document.getElementById("descripcion").removeAttribute('readonly');
+        document.getElementById("notaExoneracion").removeAttribute('readonly');
+        document.getElementById("notaAprobacion").removeAttribute('readonly');
+        document.getElementById("notaMaxima").removeAttribute('readonly');
+        document.getElementById("modificar").disabled=false;
+        document.getElementById("editar").disabled=true;
+    }   
+    function deactivateInputs(){ 
+        document.getElementById("nombre").readOnly =true;
+        document.getElementById("anio").readOnly =true;
+        document.getElementById("descripcion").readOnly =true;
+        document.getElementById("notaExoneracion").readOnly =true;
+        document.getElementById("notaAprobacion").readOnly =true;
+        document.getElementById("notaMaxima").readOnly =true;
+        document.getElementById("modificar").disabled=true;
+        document.getElementById("editar").disabled=false;
+    } 
+</script>
+
+<div class="row show-grid">
+    <div class="span16 offset1">
+        <div class="row">
+            <div class="span7">
+                <h2>Modificar Plan: <?php echo $this->form->getValue('nombre'); ?></h2>
+                <br>        
+                <br>
+                <form action="#" method="post">
+                    <fieldset>
+                        <div class=" clearfix">
+                            <label>Nombre: &nbsp;</label> 
+                            <div class="input">
+                                <input class="span3"  id="nombre" name="nombre" maxlength="25" readonly type="text" value="<?php echo $this->form->getValue('nombre'); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br>
+                        <div class=" clearfix">
+                            <label for="anio">Año: &nbsp;</label> 
+                            <div class="input">
+                                <input class="span2"  id="anio" name="anio" maxlength="25" type="text"readonly value="<?php echo $this->form->getValue('anio'); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br>
+                        <div class=" clearfix">
+                            <label for="descripcion">Descripcion: &nbsp;</label>
+                            <div class="input">
+                                <input class="span4" id="descripcion" name="descripcion" maxlength="25" readonly type="text" value="<?php echo $this->form->getValue('descripcion'); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br>
+                        <div class=" clearfix">
+                            <label>Nota de Exoneracion: &nbsp;</label> 
+                            <div class="input">
+                                <input class="span3"  id="notaExoneracion" name="notaExoneracion" maxlength="3" readonly type="text" value="<?php echo $this->form->getValue('notaExoneracion'); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+
+                        <div class=" clearfix">
+                            <label>Nota de Aprobacion: &nbsp;</label> 
+                            <div class="input">
+                                <input class="span3"  id="notaAprobacion" name="notaAprobacion" maxlength="3" readonly type="text" value="<?php echo $this->form->getValue('notaAprobacion'); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br>
+                        <div class=" clearfix">
+                            <label>Nota Maxima: &nbsp;</label> 
+                            <div class="input">
+                                <input class="span3"  id="notaMaxima" name="notaMaxima" maxlength="3" readonly type="text" value="<?php echo $this->form->getValue('notaMaxima'); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br></br>
+                        <div class="row show-grid">
+                            <div class="span2 offset2">
+                                <button type="button" id="editar" class="btn primary icon alternative edit" onclick="javascript:activateInputs();" >Editar</button>
+                            </div>
+                            <div class="span3">
+                                <button id="modificar" disabled="true" type="submit" class="btn primary icon alternative add" onclick="javascript:activateInputs();" >Modificar</button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+            <div class="span9"><br>      <br><br>     
+                <h3>Periodos</h3>
+
+                <table table cellpadding="0" cellspacing="0" border="0" class="display" id="planes">
+                    <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Tipo</th>                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->selectedPlan->getPeriodos() as $periodo) { ?>
+                            <tr class="even gradeA"   onclick="window.location.href='/administracion/infoperiodo/idperiodo/<?php echo $periodo->getId(); ?>'">
+                                <td class="center"><?php echo $periodo->getNumero(); ?></td>
+                                <td class="center"><?php echo $periodo->getTipo(); ?></td>                                
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+
+                </table>
+                <div class="row show-grid">
+                     <div class="span3 "> 
+                    <button class="btn primary icon alternative log" onclick="window.location.href='/administracion/infoplanr/planid/<?php echo ($this->selectedPlan->getId()); ?>'">Ver Requisitos</button>&nbsp;
+                     </div>
+                    
+                    <div class="span3  offset3">    
+                        <button class="btn primary icon alternative add" onclick="window.location.href='/administracion/agregarperiodo/planid/<?php echo ($this->selectedPlan->getId()); ?>'">Agregar Periodo</button>&nbsp;
+                    </div>
+                </div>
+
+                <script type="text/javascript" charset="utf-8">
+  
+                    $(document).ready(function() {
+                        $('#planes').dataTable({
+                            "bPaginate": true,
+                            //bLengthChange muestra un combo para seleccionar cuantas entradas se quieren mostrar en pantalla
+                            "bLengthChange": false,
+                            "bFilter": true,
+                            "bSort": true,
+                            "bInfo": true,
+                            "bAutoWidth": false,
+                            "aaSorting": [[ 1, "asc" ]],
+                            "sScrollY": "200px",
+                            "bPaginate": false,
+                            "oLanguage": {
+                                "sLengthMenu": "Mostrar _MENU_ filas por pagina",
+                                "sZeroRecords": "No hay registros",
+                                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "sInfoFiltered": "(filtered from _MAX_ total records)",
+                                "sSearch":"Buscar por:"
+                            },
+                            "aoColumns" : [
+                                { sWidth: '20%' },
+                                { sWidth: '60%' }
+           
+                            ] 
+                        } );
+                    } );
+                </script>
+            </div>
+        </div>
+        <a href="/administracion/adminplanestudio">&laquo; Volver </a>
+    </div> 
+
+</div>

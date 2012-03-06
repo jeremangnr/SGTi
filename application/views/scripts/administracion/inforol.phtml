@@ -1,0 +1,22 @@
+<?php
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+<h1>Info Rol: <?php echo($this->selectedRol->getNombre()); ?></h1>
+<div class="span12">
+        <div class='clearfix'>
+            <label for="nombre">Nombre </label>    
+            <div class="input">
+                <input class="xlarge" id="xlInput" name="nombre" maxlength="25" type="text" value='<?php echo($this->selectedRol->getNombre()); ?>' /> 
+                </div>
+            </div><!-- /clearfix -->
+
+            <div class='clearfix'>
+                <label for="descripcion">Descripcion </label>    
+                <div class="input">
+                    <textarea class="xlarge" id="xlInput" name="descripcion" maxlength="1000"><?php echo($this->selectedRol->getDescripcion()); ?></textarea> 
+                </div>
+       </div></div>
+        
+

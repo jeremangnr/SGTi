@@ -1,0 +1,68 @@
+<?php
+include("tabBar.php");
+include("dataTables.php");
+?>
+
+
+<div class="row show-grid">
+    <div class="span16 offset1">
+        <div class="row">
+            <div class="span7">
+                <h2>Modificar Horario</h2>
+                <br>
+                <form action="#" method="post">
+                    <fieldset>
+                        <div class=" clearfix">
+                            <label>Hora Inicio:</label> 
+                            <div class="input">
+                                <input class="span3"  id="horaInicio" name="horaInicio" maxlength="25" type="text" value="<?php echo $this->form->getValue('horaInicio'); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br>
+                        <div class=" clearfix">
+                            <label for="anio">Hora Fin:</label> 
+                            <div class="input">
+                                <input class="span2"  id="horaFin" name="horaFin" maxlength="25" type="text" value="<?php echo $this->form->getValue('horaFin'); ?>"/> 
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br>
+                        <div class=" clearfix">
+                            <label for="dia">Dia:</label>
+                            <div class="input">
+                                <select name="dia" id="normalSelect">
+                                <option value="Lunes">Lunes</option>
+                                <option value="Martes">Martes</option>
+                                <option value="Miercoles">Miercoles</option>
+                                <option value="Jueves">Jueves</option>
+                                <option value="Viernes">Viernes</option>
+                                <option value="Sabado">Sabado</option>
+                                <option value="Domingo">Domingo</option>
+                            </select>
+                            </div>
+                        </div><!-- /clearfix -->
+                        </br><label for="salon">Salon:&nbsp;</label>
+                        <div class="clearfix">
+                            
+                            <select name="salones" id="normalSelect">
+                                <?php foreach ($this->listaSalones as $salon) : ?>
+                                    <option value="<?php echo $salon->getId(); ?>"><?php echo $salon->getNombre(); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div><!-- /clearfix -->
+
+                        </br></br>
+                        <div class="row show-grid">
+                            <div class="span3 offset5">
+                                <button type="submit" class="btn primary icon alternative edit">Modificar</button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+
+        </div>
+        <a href="javascript:window.history.back();">&laquo; Volver </a>
+    </div> 
+
+</div>

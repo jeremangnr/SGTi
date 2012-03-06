@@ -1,0 +1,59 @@
+<?php include("tabBar.php"); ?>
+
+<div class="span12">
+
+    <?php print_r($this->errors); ?>      
+
+    <?php print_r($this->success); ?>
+
+    <form action="#" method="post">
+        <fieldset>
+            <legend>Modificar Salon</legend>
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('nombre', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="nombre">Nombre</label>    
+                <div class="input">
+                    <input class="xlarge" id="xlInput" name="nombre" maxlength="25" type="text" value="<?php echo $this->form->getValue('nombre'); ?>"/> 
+                    <?php if (!is_null($this->errors) && array_key_exists('nombre', $this->errors)) : ?>
+                        <span class="help-inline">*</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+
+            <div class=" <?php echo (!is_null($this->errors) && array_key_exists('capacidad', $this->errors)) ? 'clearfix error' : 'clearfix'; ?> ">
+                <label for="capacidad">Capacidad</label>    
+                <div class="input">
+                    <input class="xlarge" id="xlInput" name="capacidad" maxlength="4" type="text" value="<?php echo $this->form->getValue('capacidad'); ?>"/> 
+                    <?php if (!is_null($this->errors) && array_key_exists('capacidad', $this->errors)) : ?>
+                        <span class="help-inline">*</span>
+                    <?php endif; ?>
+                    <br/>
+                </div>
+            </div><!-- /clearfix -->
+        </fieldset>
+        <?php if ($this->errors != null) { ?>      
+            <div class="clearfix error">
+                <span class="help-inline">Se han encontrado errores en el formulario, por favor complete todos los campos correctamente</span>
+            </div><!-- /clearfix -->
+        <?php } ?>
+        <div class="row show-grid">
+            <div class="span4 offset6"><button class="btn primary icon alternative edit" type="submit">Modificar</button></div>
+        </div>
+
+    </form>
+
+    <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == true) : ?>
+        <div class="alert-message success" id="add-ok">
+            <a class="close" href="#" onclick="javascript:$('add-ok').fade(); return false;">×</a>
+            <p>El salon ha sido agregado correctamente.</p>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($this->pudoAgregar) && $this->pudoAgregar == false) : ?>
+        <div class="alert-message error" id="add-failed">
+            <a class="close" href="#" onclick="javascript:$('add-failed').fade(); return false;">×</a>
+            <p>El salon no ha sido agregado.</p>
+        </div>
+    <?php endif; ?>
+    <a href="javascript:window.history.back();">&laquo; Volver </a>
+</div>
