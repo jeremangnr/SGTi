@@ -38,24 +38,35 @@ class PlanDeEstudio extends AbstractRepository {
 	return $periodosPlan;
     }
     
-    public function findAlumnosPlan($planId) {
+    /*
+     * The extra attribute cursoId is used for a specific use case when we also need to check if the student
+     * is already signed up for a given course.
+     */
+    public function findAlumnosPlan($planId, $cursoId = null) {
         if (!isset($planId)) {
             return;
         }
         $queryBuilder = $this->_em->createQueryBuilder();
         
-        $query = $queryBuilder->select('a')
+        $query = $queryBuilder->select('a.id, a.ci, a.apellido, a.nombre, insCurso.id AS insCursoId')
                 ->from('SGTi\Entity\Alumno', 'a')
                 ->innerJoin('a.inscripcion', 'ins')
                 ->innerJoin('ins.planDeEstudio', 'plan')
+                ->leftJoin('ins.inscripcionesCurso', 'insCurso')
+                ->innerJoin('insCurso.curso', 'curso')
                 ->where('plan.id = ' .$planId)
+                ->andWhere('curso.id = ' . $cursoId)
                 ->getQuery();
         
-        $alumnos = $query->getResult();
+        echo $query->getSQL();
+        $alumnos = $query->getArrayResult();
         return $alumnos;
     }
 
     public function lastPlanAdded() {
+        // y esto? probar usando MAX(plan.id). esto te esta devolviendo TODOS los planes ordenados... al re pedo
+        
+        // esto no debe ni andar... la entided se llama PlanDeEstudio. ahreboludo
 	$query = $this->_em->createQuery('SELECT plan FROM SGTi\Entity\Plan plan ORDER BY plan.id DESC');
 	$plan = $query->getResult();
 

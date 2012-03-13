@@ -89,15 +89,15 @@ class AjaxController extends Zend_Controller_Action {
     public function getAlumnosPlanJsonAction() {
         $planRepository = $this->entityManager->getRepository('SGTi\Entity\PlanDeEstudio');
         $planId = $this->_getParam('planId');
+        $cursoId = $this->_getParam('cursoId');
         
-        $alumnos = $planRepository->findAlumnosPlan($planId);
+        $alumnos = $planRepository->findAlumnosPlan($planId, $cursoId);
         
         if (empty($alumnos)) {
             return "";
         }
         
-        //$json = \SGTi\Helper\Helper::arrayToJson($alumnos, true);
-        $json = json_encode($alumnos);
+        $json = \SGTi\Helper\Helper::arrayToJson($alumnos);
         echo $json;
     }
 

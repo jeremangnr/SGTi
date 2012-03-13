@@ -34,9 +34,10 @@ include("dataTables.php");
         
         $('#plan-select').change(function() {
             var planId =  $("#plan-select").val();
+            var cursoId = $("#curso-select").val();
             renderPeriodosSelect(planId);
             // update students table to only show those who are in the selected plan.
-            updateAlumnosPlanTable(planId, oAlumnosTable);
+            updateAlumnosPlanTable(planId, cursoId, oAlumnosTable);
         });
         
         $('#periodo-select').change(function() {

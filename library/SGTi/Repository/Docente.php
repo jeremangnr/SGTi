@@ -24,11 +24,13 @@ class Docente extends AbstractRepository {
     public function getAllMails() {
         //$query = $em->createQuery('SELECT d FROM SGTi\Entity\Docente d');
         $query = $this->_em->createQuery('SELECT d.mail FROM SGTi\Entity\Docente d');
-        $resultado=$query->getResult();
+        $resultado = $query->getResult();
         $mails = array();
+        
         foreach ($resultado as $mail) {
-             $mails[]=$mail['mail'];
+             $mails[] = $mail['mail'];
         }
+        
         return $mails;
     }
 }

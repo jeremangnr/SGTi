@@ -43,7 +43,7 @@ function renderPeriodosSelect(planId) {
        
     $.ajax({
         data: params,
-        type: "POST",
+        type: "GET",
         dataType: "json",
         url: url,
         //esta llamada, y la proxima (la de los cursos) TIENEN que ser asincronicas,
@@ -86,7 +86,7 @@ function renderCursosSelect(planId, periodoId) {
        
     $.ajax({
         data: params,
-        type: "POST",
+        type: "GET",
         dataType: "json",
         url: url,
         async: false,
@@ -112,18 +112,18 @@ function renderCursosSelect(planId, periodoId) {
     }
 }
 
-function updateAlumnosPlanTable(planId, oAlumnosTable) {
-    if (!planId || !oAlumnosTable) {
+function updateAlumnosPlanTable(planId, cursoId, oAlumnosTable) {
+    if (!planId || !cursoId || !oAlumnosTable) {
         return;
     }
     
     //loads data
     var url = "/ajax/get-alumnos-plan-json";
-    var params = "planId=" + planId;
+    var params = "planId=" + planId + "&cursoId=" + cursoId;
     
     $.ajax({
         data: params,
-        type: "POST",
+        type: "GET",
         dataType: "json",
         url: url,
         success: function(jsonData) {
