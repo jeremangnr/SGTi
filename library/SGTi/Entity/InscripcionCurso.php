@@ -49,6 +49,14 @@ class InscripcionCurso {
     private $curso;
     
     /**
+     * @ManyToOne(targetEntity="Inscripcion", inversedBy="inscripcionesCurso")
+     * @JoinColumn(name="inscripcion_curso_id", referencedColumnName="id")
+     * 
+     *  @var SGTi\Entity\InscripcionCurso
+     */
+    private $inscripcion;
+    
+    /**
     * @ManyToMany(targetEntity="Calificacion", cascade={"persist"})
     * @JoinTable(name="inscripcion_curso_calificaciones",
     *      joinColumns={@JoinColumn(name="inscripcion_curso_id", referencedColumnName="id")},
@@ -105,6 +113,14 @@ class InscripcionCurso {
 	$this->curso = $curso;
     }
     
+    public function getInscripcion() {
+        return $this->inscripcion;
+    }
+
+    public function setInscripcion($inscripcion) {
+        $this->inscripcion = $inscripcion;
+    }
+        
     public function getCalificaciones() {
 	return $this->calificaciones;
     }
@@ -124,5 +140,4 @@ class InscripcionCurso {
             $this->calificaciones->add($calificacion);
         }
     }
-
 }

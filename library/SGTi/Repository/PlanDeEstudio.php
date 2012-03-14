@@ -46,19 +46,15 @@ class PlanDeEstudio extends AbstractRepository {
         if (!isset($planId)) {
             return;
         }
-        $queryBuilder = $this->_em->createQueryBuilder();
+        // I built this query in particular using DQL instead of QueryBuilder because there is no conveniance method
+        // for adding a WITH clause
+        $query = $this->_em->createQuery("SELECT a.id, a.apellido, a.nombre
+                                          FROM SGTi\Entity\Alumno as a
+                                          INNER JOIN a.inscripcion ins
+                                          INNER JOIN ins.planDeEstudio plan WITH plan.id = " . $planId . "
+                                          LEFT JOIN ins. ");
         
-        $query = $queryBuilder->select('a.id, a.ci, a.apellido, a.nombre, insCurso.id AS insCursoId')
-                ->from('SGTi\Entity\Alumno', 'a')
-                ->innerJoin('a.inscripcion', 'ins')
-                ->innerJoin('ins.planDeEstudio', 'plan')
-                ->leftJoin('ins.inscripcionesCurso', 'insCurso')
-                ->innerJoin('insCurso.curso', 'curso')
-                ->where('plan.id = ' .$planId)
-                ->andWhere('curso.id = ' . $cursoId)
-                ->getQuery();
-        
-        echo $query->getSQL();
+        //echo $query->getSQL();
         $alumnos = $query->getArrayResult();
         return $alumnos;
     }

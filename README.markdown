@@ -4,7 +4,7 @@ README FIRST
   <strong>
   This is the project we took on for college as the final project in our career. It is originally intended for our college's administration, therefore it's still very specific to the particular problem we wanted to solve.
   It's also only in spanish (even though some code and comments are in english), but I plan on making everything english and with appropiate documentation.  
-  I plan to make a generic system that would could be used to manange different type of educational organization, but this is in VERY EARLY development yet. It's functional but has many bugs and it's kind of messy to use.
+  I plan to make a generic system that can be used to manange different types of educational organizations, but this is in VERY EARLY development yet. It's functional but has many bugs and it's kind of messy to use.
   
   Please feel free to suggest changes or report any issues you find here or to jereman_gnr@hotmail.com
   </strong>
@@ -68,7 +68,11 @@ The last step is to setup a virtual host for the project. If you located the pro
            </Directory>
         </VirtualHost>
 
-**BE SURE TO HAVE mod_rewrite ACTIVATED ON YOUR SERVER.** Zend Framework depends on it to convert it's url's.
+**BE SURE TO HAVE mod_rewrite ACTIVATED ON YOUR SERVER.** Zend Framework depends on it to convert it's url's.  
+
+
+**EDIT 1:** For the first login the user and password are *root* and *root*.
+
 
 [bisna]: https://github.com/guilhermeblanco/zendFramework1-Doctrine2
 [doctrine]: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connection-details

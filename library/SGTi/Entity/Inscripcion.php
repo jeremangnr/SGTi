@@ -19,7 +19,7 @@ class Inscripcion {
      */
     private $alumno;
     
-    /**
+   /**
     * @ManyToMany(targetEntity="InscripcionCurso", cascade={"persist"})
     * @JoinTable(name="inscripcion_inscripciones_curso",
     *      joinColumns={@JoinColumn(name="inscripcion_id", referencedColumnName="id")},
@@ -27,7 +27,12 @@ class Inscripcion {
     *      )
     * 
     *  @var \Doctrine\Common\Collections\ArrayCollection
-    */
+    **/
+    /**
+     * @OneToMany(targetEntity="InscripcionCurso", mappedBy="inscripcion", cascade={"persist"})
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
     private $inscripcionesCurso;
     
     
