@@ -847,7 +847,7 @@ class AdministracionController extends Zend_Controller_Action {
         $this->view->listaalumnos = $alumnos;
         $this->view->listaplanes = $planes;
 
-        if ($this->getRequest()->isPost() && $this->_getParam('alumnos') != null && $this->_getParam('cursos') != null) {
+        if ($this->getRequest()->isPost() && $this->_hasParam('alumnos') && $this->_hasParam('cursos')) {
             $cursoService = Application_Service_Curso::getInstance();
 
             $alumnos = $this->_getParam('alumnos');

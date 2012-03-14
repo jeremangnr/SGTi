@@ -117,28 +117,23 @@ class Application_Service_Curso extends Application_Service_AbstractService {
 
     public function inscribirAlumnosCurso($alumnos, $idCurso) {	
 	$curso = $this->entityManager->find('SGTi\Entity\Curso', $idCurso);
-	
 	//variable para guardar los alumnos que se pueden inscribir al curso
-	$listaAlumnos = array();	
+	$listaAlumnos = array();
+        
 	foreach ($alumnos as $id) {
 	    $alumnoSelected = $this->entityManager->find('SGTi\Entity\Alumno', $id);
-
-	    // me fijo si el alumno se puede inscribir a ese curso (si esta inscripto en el mismo plan que el curso)
-            // 
-            // OLD:
-	    // if ($alumnoSelected->getInscripcion() != null && $alumnoSelected->getInscripcion()->getPlanDeEstudio() == $curso->getMateria()->getPeriodo()->getPlanDeEstudio()) {
-            
+	    // check to see if the student can be signed up for the course (it can't already have it)
 	    if ($alumnoSelected->puedeInscribirEnCurso($curso)) {		
 		//creo la inscripcion al curso
 		$inscripcionCurso = new SGTi\Entity\InscripcionCurso();
-		//le agego el curso
+		//le agrego el curso
 		$inscripcionCurso->setCurso($curso);
 		//le agrego la inscripcion curso al alumno
-		$alumnoSelected->getInscripcion()->agregarInscripcionCurso($inscripcionCurso);
-		
+		$alumnoSelected->getInscripcion()->agregarInscripcionCurso($inscripcionCurso);		
 		//guardo en el alumno en el array
 		$listaAlumnos[] = $alumnoSelected;
 	    } else {
+                // if ANY of the students can't be signed up for the course, we return and throw an error
                 return false;
             }
 	}
@@ -147,7 +142,7 @@ class Application_Service_Curso extends Application_Service_AbstractService {
 	    $this->entityManager->beginTransaction();
             
 	    //inscribo los alumno
-	    foreach ($listaAlumnos as $alumno){
+	    foreach ($listaAlumnos as $alumno) {
 		$this->entityManager->merge($alumno);
 	    }
             

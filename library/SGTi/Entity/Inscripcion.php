@@ -89,9 +89,21 @@ class Inscripcion {
     }
     
     public function agregarInscripcionCurso($inscripcionCurso) {
-        if (!$this->inscripcionesCurso->contains($inscripcionCurso)) {
-            $this->inscripcionesCurso->add($inscripcionCurso);
+        if (!$this->inscripcionesCurso->isEmpty()) {
+            foreach($this->inscripcionesCurso as $insInscripcionCurso) {
+                $insCurso = $insInscripcionCurso->getCurso();
+                $curso = $inscripcionCurso->getCurso();
+                
+                if ($insCurso->getId() == $curso->getId()) {
+                    return;
+                }
+            }
         }
+        
+        $this->inscripcionesCurso->add($inscripcionCurso);
+        $inscripcionCurso->setInscripcion($this);
+        
+        return $this;
     }
     
     public function getFechaInscripcion() {

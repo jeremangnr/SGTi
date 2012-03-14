@@ -143,27 +143,19 @@ class PlanDeEstudio {
     }
 
     public function agregarPeriodo($periodo) {
-        // setteo a true por defecto
-        $addPeriodo = true;
-
         if (!$this->periodos->isEmpty()) {
             foreach ($this->periodos as $planPeriodo) {
                 if ($periodo->getNumero() == $planPeriodo->getNumero()) {
-                    // si encuentro uno igual no voy a agregar
-                    $addPeriodo = false;
-                    break;
+                    // if we find a match we return NULL and don't add. we should throw an exception here.
+                    return;
                 }
             }
         }
-        // si no agrego devuelvo null
-        if ($addPeriodo) {
-            $this->periodos->add($periodo);
-            $periodo->setPlanDeEstudio($this);
-            
-            return $this;
-        } else {
-            return;
-        }
+        
+        $this->periodos->add($periodo);
+        $periodo->setPlanDeEstudio($this);
+
+        return $this;
     }
 
     public function agregarRequisitoInscripcion($requisitoInscripcion) {
